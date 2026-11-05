@@ -1,0 +1,188 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="design_doc_mode" content="canvas"><title>Board Sign Directions</title><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;font-family:var(--font-body);color:var(--text-body)}a{color:var(--text-body)}a:hover{color:var(--text-muted)}.frame{position:absolute;top:40px;width:432px;display:flex;flex-direction:column;gap:12px}.hd{display:flex;align-items:center;gap:10px}.badge{font-weight:700;font-size:13px;background:var(--hp-black);color:var(--hp-yellow);padding:3px 8px;border-radius:3px}.ttl{font-family:var(--font-display);font-size:24px;text-transform:uppercase;line-height:1}.desc{margin:0;font-size:13px;line-height:1.45;color:var(--text-muted);min-height:56px;text-wrap:pretty}</style></head><body>
+<div class="frame" id="2a" style="left:40px;width:648px"><div class="hd"><span class="badge">2a</span><span class="ttl">List Board</span></div><p class="desc">36″ × 36″ board (widened from 24″ for longer trail names). Built from 1c without the map. One-color black brandmark at top. Each row: trail number, then name with its difficulty symbol right beside it. Left-family arrows sit far left, all others far right. Destinations put their icon in the number column.</p><div id="m-e"></div></div>
+<div class="frame" id="1a" style="top:860px;left:40px"><div class="hd"><span class="badge">1a</span><span class="ttl">Black Board</span></div><p class="desc">Black PVC board with white row panels. Arrow color carries the meaning, per the Playbook. Yellow junction header, legend and logo in the footer.</p><div id="m-a"></div></div>
+<div class="frame" id="1b" style="top:860px;left:552px"><div class="hd"><span class="badge">1b</span><span class="ttl">Color Bands</span></div><p class="desc">Each row is a full-width band in its difficulty color, like stacked street signs. Reads from the farthest distance. Arrows are white because the band carries the color.</p><div id="m-b"></div></div>
+<div class="frame" id="1c" style="top:860px;left:1064px"><div class="hd"><span class="badge">1c</span><span class="ttl">Junction Map</span></div><p class="desc">A schematic of the intersection sits above the list, with trail-colored lines leaving a You Are Here dot. Best at complex junctions; each board needs its own diagram.</p><div id="m-c"></div></div>
+<div class="frame" id="1d" style="top:860px;left:1576px"><div class="hd"><span class="badge">1d</span><span class="ttl">Hawk Yellow</span></div><p class="desc">Brand-forward yellow board with black type and ruled rows. Symbols and arrows sit on white tiles so every difficulty color stays legible against yellow.</p><div id="m-d"></div></div>
+<script type="text/babel">
+const { DifficultySymbol, DirectionArrow, DestinationIcon, LEVELS } = window.HawkPrideSignageDesignSystem_931354;
+const u = 18, W = 24, H = 36;
+const LOGO = '../../assets/logo/hawk-pride-offroad-logo.png';
+const ROWS = [
+  { name: 'Hawk Ridge', number: 12, level: 'moderate', direction: 'straight' },
+  { name: 'Rock Garden', number: 31, level: 'difficult', direction: 'left' },
+  { name: 'Widowmaker', number: 44, level: 'extreme', direction: 'bear-left' },
+  { name: 'Creek Run', number: 7, level: 'easy', direction: 'right' },
+  { name: 'Campground', level: 'destination', destination: 'campground', direction: 'right' },
+  { name: 'Check-In', level: 'destination', destination: 'check-in', direction: 'straight-then-right' },
+];
+const isLeft = d => /left$/.test(d);
+const isDest = r => r.level === 'destination';
+const color = r => LEVELS[r.level].color;
+const disp = { fontFamily: 'var(--font-display)', textTransform: 'uppercase', lineHeight: 1, whiteSpace: 'nowrap' };
+function Mark({ r, size, tone = 'color' }) {
+  if (isDest(r)) return <DestinationIcon destination={r.destination} size={size * 1.05} color={tone === 'white' ? '#fff' : undefined} strokeWidth={2.75} />;
+  return <DifficultySymbol level={r.level} size={r.level === 'extreme' ? size * 0.62 : size} tone={tone} />;
+}
+function Fit({ size, style, children }) {
+  const ref = React.useRef(null);
+  const [tick, setTick] = React.useState(0);
+  React.useEffect(() => {
+    let live = true; const bump = () => live && setTick(t => t + 1);
+    document.fonts.ready.then(bump); document.fonts.addEventListener('loadingdone', bump);
+    const ro = new ResizeObserver(bump); ro.observe(ref.current.parentElement);
+    return () => { live = false; document.fonts.removeEventListener('loadingdone', bump); ro.disconnect(); };
+  }, []);
+  React.useLayoutEffect(() => { const el = ref.current; let f = size; el.style.fontSize = f + 'px'; let g = 0; while (el.scrollWidth > el.clientWidth + 0.5 && g++ < 80) { f *= 0.97; el.style.fontSize = f + 'px'; } });
+  return <div ref={ref} style={{ ...disp, flex: 1, minWidth: 0, overflow: 'hidden', fontSize: size, ...style }}>{children}</div>;
+}
+const Slot = ({ w, children }) => <div style={{ width: w, flex: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{children}</div>;
+
+/* 1a — Black board */
+function RowA({ r }) {
+  const arrow = <Slot w={2.8 * u}><DirectionArrow direction={r.direction} level={r.level} size={2.8 * u} strokeWidth={3.5} /></Slot>;
+  return <div style={{ height: 3.4 * u, background: '#fff', borderRadius: 0.2 * u, display: 'flex', alignItems: 'center', gap: 0.5 * u, padding: `0 ${0.5 * u}px` }}>
+    {isLeft(r.direction) && arrow}
+    <Slot w={2.4 * u}><Mark r={r} size={2.1 * u} /></Slot>
+    {!isDest(r) && <div style={{ ...disp, height: 2 * u, minWidth: 2 * u, padding: `0 ${0.2 * u}px`, boxSizing: 'border-box', border: `${0.14 * u}px solid var(--hp-black)`, borderRadius: 0.15 * u, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 1.45 * u }}>{r.number}</div>}
+    <Fit size={2 * u}>{r.name}</Fit>
+    {!isLeft(r.direction) && arrow}
+  </div>;
+}
+function SignA() {
+  return <div style={{ width: W * u, height: H * u, background: 'var(--hp-black)', borderRadius: 0.5 * u, padding: u, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 0.4 * u }}>
+    <div style={{ height: 4 * u, background: 'var(--hp-yellow)', borderRadius: 0.2 * u, display: 'flex', alignItems: 'center', justifyContent: 'center', ...disp, fontSize: 2.6 * u }}>Junction 14</div>
+    {ROWS.map((r, i) => <RowA key={i} r={r} />)}
+    <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 0.4 * u }}>
+      <div style={{ display: 'flex', gap: 0.7 * u, alignItems: 'flex-end' }}>
+        {['easy', 'moderate', 'difficult', 'extreme'].map(l => <div key={l} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.25 * u }}>
+          <div style={{ height: 1.3 * u, display: 'flex', alignItems: 'center' }}><DifficultySymbol level={l} size={l === 'extreme' ? 0.85 * u : 1.2 * u} keyline /></div>
+          <div style={{ ...disp, color: '#fff', fontSize: 0.6 * u }}>{LEVELS[l].label}</div></div>)}
+      </div>
+      <img src={LOGO} alt="Hawk Pride Offroad" style={{ height: 3 * u, display: 'block' }} />
+    </div>
+  </div>;
+}
+
+/* 1b — Color bands */
+function RowB({ r }) {
+  const c = isDest(r) ? 'var(--hp-black)' : color(r);
+  const arrow = <Slot w={2.8 * u}><DirectionArrow direction={r.direction} color="#fff" size={2.8 * u} strokeWidth={3.5} /></Slot>;
+  return <div style={{ height: 3.5 * u, background: c, borderRadius: 0.25 * u, display: 'flex', alignItems: 'center', gap: 0.5 * u, padding: `0 ${0.5 * u}px` }}>
+    {isLeft(r.direction) && arrow}
+    <Slot w={2.4 * u}><Mark r={r} size={2 * u} tone="white" /></Slot>
+    {!isDest(r) && <div style={{ ...disp, height: 2.1 * u, minWidth: 2.1 * u, padding: `0 ${0.2 * u}px`, boxSizing: 'border-box', background: '#fff', color: c, borderRadius: 0.2 * u, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 1.55 * u }}>{r.number}</div>}
+    <Fit size={2.05 * u} style={{ color: '#fff' }}>{r.name}</Fit>
+    {!isLeft(r.direction) && arrow}
+  </div>;
+}
+function SignB() {
+  return <div style={{ width: W * u, height: H * u, background: '#fff', border: `${0.4 * u}px solid var(--hp-black)`, borderRadius: 0.5 * u, padding: 0.8 * u, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 0.45 * u }}>
+    <div style={{ height: 4.4 * u, background: 'var(--hp-black)', borderRadius: 0.25 * u, display: 'flex', alignItems: 'center', gap: 0.6 * u, padding: `0 ${0.6 * u}px` }}>
+      <img src={LOGO} alt="Hawk Pride Offroad" style={{ height: 3.3 * u, display: 'block' }} />
+      <div style={{ ...disp, flex: 1, textAlign: 'right', color: 'var(--hp-yellow)', fontSize: 2.3 * u }}>Junction 14</div>
+    </div>
+    {ROWS.map((r, i) => <RowB key={i} r={r} />)}
+    <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', padding: `0 ${0.3 * u}px` }}>
+      {['easy', 'moderate', 'difficult', 'extreme'].map(l => <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 0.35 * u }}>
+        <DifficultySymbol level={l} size={l === 'extreme' ? 0.75 * u : 1.05 * u} />
+        <div style={{ ...disp, fontSize: 0.75 * u }}>{LEVELS[l].label}</div></div>)}
+    </div>
+  </div>;
+}
+
+/* 1c — Junction map */
+const MV = { straight: [0, -1], left: [-1, 0], right: [1, 0], 'bear-left': [-0.7071, -0.7071], 'bear-right': [0.7071, -0.7071], 'back-right': [0.7071, 0.7071], 'back-left': [-0.7071, 0.7071], back: [0, 1] };
+function JunctionMap() {
+  const mw = 22, mh = 12, cx = 11, cy = 7.2;
+  const trails = ROWS.filter(r => !isDest(r));
+  const len = v => (v[1] === 0 ? 7.6 : v[0] === 0 ? 5 : 5.6);
+  return <div style={{ position: 'relative', width: mw * u, height: mh * u, background: 'var(--hp-gray-100)', borderRadius: 0.25 * u, overflow: 'hidden' }}>
+    <svg width={mw * u} height={mh * u} viewBox={`0 0 ${mw} ${mh}`} style={{ position: 'absolute', inset: 0 }}>
+      <line x1={cx} y1={cy} x2={cx} y2={mh} stroke="var(--hp-gray-400)" strokeWidth="0.9" strokeLinecap="round" />
+      {trails.map((r, i) => { const v = MV[r.direction], L = len(v); return <line key={i} x1={cx} y1={cy} x2={cx + v[0] * L} y2={cy + v[1] * L} stroke={color(r)} strokeWidth="0.9" strokeLinecap="round" />; })}
+      <circle cx={cx} cy={cy} r="0.85" fill="var(--hp-black)" stroke="var(--hp-yellow)" strokeWidth="0.35" />
+    </svg>
+    {trails.map((r, i) => { const v = MV[r.direction], L = len(v) - 0.2; return <div key={i} style={{ position: 'absolute', left: (cx + v[0] * L) * u, top: (cy + v[1] * L) * u, transform: 'translate(-50%,-50%)', display: 'flex', alignItems: 'center', gap: 0.25 * u, background: '#fff', border: `${0.12 * u}px solid ${color(r)}`, borderRadius: 0.2 * u, padding: `${0.2 * u}px ${0.3 * u}px` }}>
+      <DifficultySymbol level={r.level} size={r.level === 'extreme' ? 0.7 * u : 1 * u} />
+      <span style={{ ...disp, fontSize: 1.1 * u }}>{r.number}</span></div>; })}
+    <div style={{ position: 'absolute', left: (cx + 0.9) * u, top: (cy + 1.1) * u, ...disp, fontSize: 0.75 * u, background: 'var(--hp-yellow)', padding: `${0.15 * u}px ${0.25 * u}px`, borderRadius: 0.1 * u }}>You are here</div>
+  </div>;
+}
+function RowC({ r }) {
+  return <div style={{ height: 2.45 * u, display: 'flex', alignItems: 'center', gap: 0.45 * u, borderBottom: `${0.08 * u}px solid var(--hp-gray-200)` }}>
+    <Slot w={2.2 * u}><DirectionArrow direction={r.direction} level={r.level} size={2.1 * u} strokeWidth={3.5} /></Slot>
+    <Slot w={1.8 * u}><Mark r={r} size={1.5 * u} /></Slot>
+    <Fit size={1.6 * u}>{r.name}</Fit>
+    {!isDest(r) && <div style={{ ...disp, height: 1.6 * u, minWidth: 1.6 * u, padding: `0 ${0.15 * u}px`, boxSizing: 'border-box', border: `${0.12 * u}px solid var(--hp-black)`, borderRadius: 0.12 * u, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 1.15 * u }}>{r.number}</div>}
+  </div>;
+}
+function SignC() {
+  return <div style={{ width: W * u, height: H * u, background: '#fff', border: `${0.3 * u}px solid var(--hp-black)`, borderRadius: 0.5 * u, padding: 0.7 * u, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 0.5 * u }}>
+    <div style={{ height: 3 * u, background: 'var(--hp-black)', borderRadius: 0.2 * u, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: `0 ${0.6 * u}px` }}>
+      <div style={{ ...disp, color: '#fff', fontSize: 1.9 * u }}>Junction 14</div>
+      <img src={LOGO} alt="Hawk Pride Offroad" style={{ height: 2.4 * u, display: 'block' }} />
+    </div>
+    <JunctionMap />
+    <div style={{ display: 'flex', flexDirection: 'column' }}>{ROWS.map((r, i) => <RowC key={i} r={r} />)}</div>
+  </div>;
+}
+
+/* 1d — Hawk yellow */
+const Tile = ({ children }) => <div style={{ width: 2.7 * u, height: 2.7 * u, flex: 'none', background: '#fff', borderRadius: 0.25 * u, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{children}</div>;
+function RowD({ r, last }) {
+  const arrow = <Tile><DirectionArrow direction={r.direction} level={r.level} size={2.3 * u} strokeWidth={3.5} /></Tile>;
+  return <div style={{ height: 3.55 * u, display: 'flex', alignItems: 'center', gap: 0.5 * u, borderBottom: last ? 'none' : `${0.14 * u}px solid var(--hp-black)` }}>
+    {isLeft(r.direction) && arrow}
+    <Tile><Mark r={r} size={1.8 * u} /></Tile>
+    <Fit size={2 * u}>{r.name}</Fit>
+    {!isDest(r) && <div style={{ ...disp, height: 2.1 * u, minWidth: 2.1 * u, padding: `0 ${0.2 * u}px`, boxSizing: 'border-box', background: 'var(--hp-black)', color: 'var(--hp-yellow)', borderRadius: 0.15 * u, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 1.5 * u }}>{r.number}</div>}
+    {!isLeft(r.direction) && arrow}
+  </div>;
+}
+function SignD() {
+  return <div style={{ width: W * u, height: H * u, background: 'var(--hp-yellow)', border: `${0.5 * u}px solid var(--hp-black)`, borderRadius: 0.5 * u, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div style={{ background: 'var(--hp-black)', padding: `${0.7 * u}px ${0.8 * u}px ${0.8 * u}px`, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.3 * u }}>
+      <img src={LOGO} alt="Hawk Pride Offroad" style={{ height: 4.2 * u, display: 'block' }} />
+      <div style={{ ...disp, color: '#fff', fontSize: 1.7 * u, letterSpacing: '0.04em' }}>Junction 14</div>
+    </div>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: `${0.3 * u}px ${0.9 * u}px` }}>
+      {ROWS.map((r, i) => <RowD key={i} r={r} last={i === ROWS.length - 1} />)}
+    </div>
+  </div>;
+}
+
+/* 2a — List board */
+const LOGO_BLACK = '../../assets/logo/brandmark-black.svg';
+function RowE({ r, last }) {
+  const arrow = <Slot w={3.6 * u}><DirectionArrow direction={r.direction} level={r.level} size={3.6 * u} strokeWidth={3.75} /></Slot>;
+  return <div style={{ height: 4.1 * u, display: 'flex', alignItems: 'center', gap: 0.5 * u, borderBottom: last ? 'none' : `${0.12 * u}px solid var(--hp-black)` }}>
+    {isLeft(r.direction) && arrow}
+    <Slot w={2.9 * u}>{isDest(r)
+      ? <DestinationIcon destination={r.destination} size={2.8 * u} strokeWidth={3} />
+      : <div style={{ ...disp, height: 2.7 * u, minWidth: 2.7 * u, padding: `0 ${0.2 * u}px`, boxSizing: 'border-box', border: `${0.2 * u}px solid var(--hp-black)`, borderRadius: 0.18 * u, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 2 * u }}>{r.number}</div>}</Slot>
+    <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 0.45 * u }}>
+      <Fit size={2.6 * u} style={{ flex: '0 1 auto' }}>{r.name}</Fit>
+      {!isDest(r) && <div style={{ flex: 'none', display: 'flex' }}><DifficultySymbol level={r.level} size={r.level === 'extreme' ? 1.45 * u : 2.2 * u} /></div>}
+    </div>
+    {!isLeft(r.direction) && arrow}
+  </div>;
+}
+function SignE() {
+  const W2 = 36, H2 = 36;
+  return <div style={{ width: W2 * u, height: H2 * u, background: '#fff', border: `${0.45 * u}px solid var(--hp-black)`, borderRadius: 0.5 * u, padding: `${0.6 * u}px ${0.8 * u}px`, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 0.4 * u }}>
+    <img src={LOGO_BLACK} alt="Hawk Pride" style={{ width: 20 * u, alignSelf: 'center', display: 'block' }} />
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>{ROWS.map((r, i) => <RowE key={i} r={r} last={i === ROWS.length - 1} />)}</div>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('m-e')).render(<SignE />);
+ReactDOM.createRoot(document.getElementById('m-a')).render(<SignA />);
+ReactDOM.createRoot(document.getElementById('m-b')).render(<SignB />);
+ReactDOM.createRoot(document.getElementById('m-c')).render(<SignC />);
+ReactDOM.createRoot(document.getElementById('m-d')).render(<SignD />);
+</script></body></html>

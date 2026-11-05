@@ -1,0 +1,35 @@
+
+
+<div id="dir"></div>
+<p class="muted small" style="margin-top:20px">Numbers are the current trail numbers. Where a trail was renumbered, the old number is shown. Trails marked “Not yet rated” have no rating on signs yet.</p>
+
+<!--SCRIPTS-->
+<script>
+document.addEventListener('hp-ready', () => {
+  const { NS, h } = HP;
+  const { TRAIL_INVENTORY, TrailSymbol, RouteBadge, LEVELS } = NS;
+  const LV = [['all', 'All'], ['easy', 'Easy'], ['moderate', 'Moderate'], ['difficult', 'Difficult'], ['extreme', 'Extreme'], ['access', 'Access road'], ['gl', 'Green Line']];
+  const natural = (a, b) => String(a.number).localeCompare(String(b.number), undefined, { numeric: true });
+  const rows = TRAIL_INVENTORY.filter(t => t.number).slice().sort(natural);
+  function Dir() {
+    const [q, setQ] = React.useState('');
+    const [lv, setLv] = React.useState('all');
+    const s = q.trim().toLowerCase();
+    const list = rows.filter(t => (lv === 'all' || (lv === 'gl' ? t.greenLine : t.level === lv)) && (!s || String(t.number).toLowerCase() === s || String(t.number).toLowerCase().startsWith(s) || (t.name || '').toLowerCase().includes(s)));
+    return h(React.Fragment, null,
+      h('div', { className: 'search' },
+        h('input', { type: 'search', placeholder: 'Search trail name or number', value: q, onChange: e => setQ(e.target.value), 'aria-label': 'Search trails' }),
+        h('div', { className: 'seg', role: 'group', 'aria-label': 'Filter by rating' }, LV.map(([k, l]) => h('button', { key: k, className: lv === k ? 'on' : '', onClick: () => setLv(k) }, l)))),
+      h('div', { className: 'muted small', style: { marginBottom: 8 } }, list.length + ' of ' + rows.length + ' trails'),
+      h('div', { className: 'tablewrap' }, h('table', null,
+        h('thead', null, h('tr', null, ['Trail', 'Name', 'Rating', 'Route', 'Old #'].map(c => h('th', { key: c }, c)))),
+        h('tbody', null, list.map(t => h('tr', { key: t.number + t.name },
+          h('td', { style: { width: 90 } }, h('div', { style: { display: 'flex', justifyContent: 'center' } }, h(TrailSymbol, { level: t.level, number: t.number, size: t.level === 'extreme' ? 30 : t.level === 'access' ? 34 : 44 }))),
+          h('td', null, h('b', null, t.name || 'Unnamed')),
+          h('td', null, t.level ? LEVELS[t.level].label : h('span', { className: 'muted' }, 'Not yet rated')),
+          h('td', null, t.greenLine ? h(RouteBadge, { height: 22 }) : ''),
+          h('td', { className: 'muted' }, t.oldNumber && t.oldNumber !== t.number ? t.oldNumber : '')))))));
+  }
+  ReactDOM.createRoot(document.getElementById('dir')).render(h(Dir));
+});
+</script>

@@ -1,0 +1,70 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Board Sign Sizes — 24″ wide</title><link rel="stylesheet" href="../../styles.css">
+<style>*{box-sizing:border-box}body{margin:0;font-family:var(--font-body);color:var(--text-body);background:var(--surface-muted)}a{color:var(--text-body)}a:hover{color:var(--text-muted)}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 32px 80px;display:flex;flex-direction:column;gap:28px}
+h1{font-family:var(--font-display);font-weight:400;font-size:44px;line-height:1;text-transform:uppercase;margin:0}
+h2{font-family:var(--font-display);font-weight:400;font-size:24px;line-height:1.1;text-transform:uppercase;margin:0 0 14px}
+.lede{margin:10px 0 0;font-size:15px;line-height:1.5;max-width:780px;color:var(--text-muted);text-wrap:pretty}
+.panel{background:#fff;border:1px solid var(--border-default);padding:22px 24px}
+.ladder{display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap}
+.size{display:flex;flex-direction:column;align-items:center;gap:8px}
+.board{width:144px;border:2px solid var(--hp-black);border-radius:4px;background:#fff;display:flex;flex-direction:column;padding:4px;gap:0}
+.hdr{background:var(--hp-gray-200);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--text-muted);letter-spacing:.04em}
+.row{border-top:1px solid var(--hp-gray-200);display:flex;align-items:center;gap:6px;padding:0 6px}
+.row i{width:12px;height:12px;border-radius:50%;background:var(--difficulty-easy);flex:none}
+.row b{height:7px;background:var(--hp-black);border-radius:1px;flex:none}
+.cap{font-family:var(--font-display);font-size:20px;line-height:1}
+.sub{font-size:12px;color:var(--text-muted);text-align:center;line-height:1.4}
+.sheets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.sheet{display:flex;flex-direction:column;align-items:center;gap:6px}
+.s48{width:96px;height:192px;border:1.5px solid var(--hp-gray-400);display:grid;grid-template-columns:1fr 1fr;align-content:start;background:var(--hp-gray-100)}
+.s48 div{border:1px solid var(--hp-black);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:8px 10px;border-bottom:2px solid var(--hp-black)}
+td{padding:8px 10px;border-bottom:1px solid var(--border-default)}
+tr.rec td{background:#FFF4C2;font-weight:700}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+ul{margin:0;padding-left:18px;font-size:14px;line-height:1.55;display:flex;flex-direction:column;gap:4px}
+.names{columns:2;font-size:13px;line-height:1.6;margin:0;padding-left:18px}</style></head><body>
+<div class="wrap">
+<div><h1>Board Sign Sizes — 24″ wide</h1>
+<p class="lede">A size ladder for printed PVC board signs, capped at 24″ wide. Every height divides evenly into a 4′ × 8′ sheet, so sheets cut with no waste. Name-fit numbers were measured against all 151 names in the trail inventory plus the Green Line sign destinations.</p></div>
+
+<div class="panel"><h2>Proposed sizes</h2>
+<div class="ladder" id="ladder"></div>
+<p class="sub" style="text-align:left;margin-top:16px">4″ header for the brandmark, then 4″ per row. 4-row and 6-row boards use the next size up and the spare height goes to the header.</p></div>
+
+<div class="panel"><h2>Sheet yield — 48″ × 96″ PVC</h2>
+<div class="sheets" id="sheets"></div></div>
+
+<div class="panel"><h2>What fits at 24″</h2>
+<table><thead><tr><th>Letter size</th><th>Readable to about</th><th>Name space, arrows one side</th><th>Names that fit</th><th>Name space, arrows both sides</th><th>Names that fit</th><th>Outfitter Trail + badge beside</th></tr></thead><tbody>
+<tr><td>2.5″</td><td>~75–100 ft</td><td>13.2″</td><td>89 / 151</td><td>8.9″</td><td>37 / 151</td><td>No</td></tr>
+<tr><td>2.25″</td><td>~70–90 ft</td><td>14.0″</td><td>112 / 151</td><td>10.2″</td><td>74 / 151</td><td>No</td></tr>
+<tr><td>2″</td><td>~60–80 ft</td><td>14.8″</td><td>134 / 151</td><td>11.4″</td><td>99 / 151</td><td>No</td></tr>
+<tr class="rec"><td>1.75″</td><td>~50–70 ft</td><td>15.7″</td><td>141 / 151</td><td>12.7″</td><td>134 / 151</td><td>One side only</td></tr>
+<tr><td>1.5″</td><td>~45–60 ft</td><td>16.5″</td><td>148 / 151</td><td>14.0″</td><td>144 / 151</td><td>Yes</td></tr>
+</tbody></table>
+<p class="sub" style="text-align:left;margin-top:10px">Letter size = type size of the name (current boards use 2.6″). Distances use the common 30–40 ft per inch of letter height for high-contrast signs; riders approach at low speed, so 50–70 ft is enough lead time at most junctions.</p></div>
+
+<div class="two">
+<div class="panel"><h2>Recommendation</h2><ul>
+<li><b>Width:</b> 24″ for every board.</li>
+<li><b>Heights:</b> 8, 12, 16, 24 and 32″ — 1, 2, 3, 4–5 and 6–7 rows.</li>
+<li><b>Letter size:</b> 1.75″ names on every board, never shrunk.</li>
+<li><b>Numbered symbol:</b> about 2.5″ tall, so 3-digit numbers stay readable.</li>
+<li><b>Arrows:</b> 2.5″, at the left or right edge as now. Rows with arrows on both sides lose about 3″ of name space.</li>
+<li><b>Green Line badge:</b> under the name at 24″. It only fits beside the name on boards whose arrows are all on one side.</li>
+<li><b>Long names:</b> add a short “sign name” column to the trail inventory for the names that don't fit, and print that instead of shrinking the type.</li>
+</ul></div>
+<div class="panel"><h2>Names that need a sign name at 1.75″</h2>
+<p class="sub" style="text-align:left;margin:0 0 10px">Don't fit 15.7″ (arrows on one side):</p>
+<ul class="names"><li>Diamondback - beginning section</li><li>Diamondback easy out lower</li><li>Diamondback easy out upper</li><li>Road to Primitive Camping</li><li>Green Light Cut Through</li><li>Brokefoot viewing trail</li><li>Southern Diamondback</li><li>Kicking and Screaming</li><li>Western Diamondback</li><li>Diamondback easy out</li></ul></div>
+</div>
+</div>
+<script>
+const S=[{h:8,rows:1,yield:12},{h:12,rows:2,yield:8},{h:16,rows:3,yield:6},{h:24,rows:'4–5',r:5,yield:4},{h:32,rows:'6–7',r:7,yield:3}];
+const px=6;
+document.getElementById('ladder').innerHTML=S.map(s=>{const n=s.r||s.rows;const hdr=s.h-4*n;return `<div class="size"><div class="board" style="height:${s.h*px}px"><div class="hdr" style="height:${(hdr*px)-4}px">BRANDMARK</div>${Array.from({length:n},()=>`<div class="row" style="height:${4*px}px"><i></i><b style="width:${[60,44,70,52,66,48,58][Math.floor(Math.random()*7)]}px"></b><span style="flex:1"></span><b style="width:14px;height:10px;background:var(--difficulty-easy)"></b></div>`).join('')}</div><div class="cap">24″ × ${s.h}″</div><div class="sub">${s.rows} row${s.rows===1?'':'s'}</div></div>`}).join('');
+document.getElementById('sheets').innerHTML=S.map(s=>{const per=Math.floor(96/s.h)*2;return `<div class="sheet"><div class="s48">${Array.from({length:per},()=>`<div style="height:${s.h*2}px"></div>`).join('')}</div><div class="cap" style="font-size:16px">24″ × ${s.h}″</div><div class="sub">${per} per sheet · no waste</div></div>`}).join('');
+</script>
+</body></html>

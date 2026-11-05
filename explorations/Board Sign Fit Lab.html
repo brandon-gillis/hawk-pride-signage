@@ -1,0 +1,169 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Board Sign Fit Lab — 24″</title><link rel="stylesheet" href="../styles.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link href="https://fonts.googleapis.com/css2?family=Overpass:wght@700&amp;family=Barlow+Semi+Condensed:wght@700&amp;family=Atkinson+Hyperlegible+Next:wght@700&amp;display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:var(--font-body);color:var(--text-body);background:var(--surface-muted)}a{color:var(--text-body)}a:hover{color:var(--text-muted)}
+.wrap{max-width:1400px;margin:0 auto;padding:36px 32px 80px;display:flex;flex-direction:column;gap:22px}
+h1{font-family:var(--font-display);font-weight:400;font-size:40px;line-height:1;text-transform:uppercase;margin:0}
+.lede{margin:8px 0 0;font-size:15px;line-height:1.5;max-width:820px;color:var(--text-muted);text-wrap:pretty}
+.panel{background:#fff;border:1px solid var(--border-default);padding:18px 22px}
+.ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px 24px}
+.ctl{display:flex;flex-direction:column;gap:6px}
+.lab{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}
+.seg{display:flex;border:2px solid var(--hp-black);width:max-content;max-width:100%;flex-wrap:wrap}
+.seg button{font:inherit;font-size:13px;font-weight:700;border:none;padding:6px 10px;background:#fff;cursor:pointer;white-space:nowrap}
+.seg button.on{background:var(--hp-black);color:var(--hp-yellow)}
+.hint{font-size:12px;color:var(--text-muted);line-height:1.4}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.stat{border-top:3px solid var(--hp-black);padding-top:8px}
+.big{font-family:var(--font-display);font-size:34px;line-height:1}
+.boards{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.bwrap{display:flex;flex-direction:column;gap:8px;align-items:center}
+.cap{font-size:12px;color:var(--text-muted);text-align:center;font-variant-numeric:tabular-nums}
+.miss{font-size:13px;line-height:1.6;columns:3;margin:0;padding-left:18px}</style></head><body>
+<div class="wrap">
+<div><h1>Board Sign Fit Lab — 24″ wide</h1>
+<p class="lede">Each control is a design rule that changes how much room trail names get on a 24″ board. The counts are measured against every name in the trail inventory. Rows outlined in red don't fit at the chosen cap height; type never shrinks. Arrows, symbols and badges keep the same physical size whichever typeface is picked, so only the names change. Boards come in three sizes only: 24″ × 12″ (1–2 rows), 24″ × 16″ (3 rows), 24″ × 24″ (4–5 rows).</p></div>
+<div class="panel"><div class="ctrls" id="ctrls"></div></div>
+<div class="panel"><div class="stats" id="stats"></div></div>
+<div class="boards" id="boards"></div>
+<div class="panel" id="misspanel"></div>
+</div>
+<script type="text/babel">
+const NS = window.HawkPrideSignageDesignSystem_931354;
+const { DirectionArrow, DestinationIcon, LEVELS, TRAIL_INVENTORY } = NS;
+let TrailSymbol;
+const ready = fetch('../components/symbols/TrailSymbol.jsx').then(r => r.text()).then(src => {
+  const code = src.replace(/^import .*$/gm, '').replace('export function TrailSymbol', 'function TrailSymbol') + '\nwindow.__HP_TS = TrailSymbol;';
+  new Function('React', 'LEVELS', Babel.transform(code, { presets: ['react'] }).code)(React, LEVELS); TrailSymbol = window.__HP_TS;
+});
+const LOGO = '../assets/logo/brandmark-black.svg';
+const ROUTE = 'var(--route-green-line, #0B5D33)';
+const u = 14, W = 24;
+const OT = { name: 'Outfitter Trail', number: 100, level: 'easy', route: true };
+const SAMPLES = [
+  { id: '04', rows: [{ name: 'Ridgeline', number: 81, level: 'access', direction: 'left' }, { name: 'Lower Ridgeline', number: 101, level: 'moderate', direction: 'right' }, { ...OT, direction: 'straight' }] },
+  { id: '05', rows: [{ name: 'Green Light Cut Through', level: null, direction: 'left' }, { ...OT, direction: 'straight' }] },
+  { id: '06', rows: [{ ...OT, direction: 'left' }, { name: 'Vertical Limit', number: 103, level: 'difficult', direction: 'straight' }, { name: "To Jake's Hill", number: 102, level: 'difficult', direction: 'straight' }, { name: 'To Hopkins Revenge', number: 142, level: 'difficult', direction: 'straight' }] },
+  { id: '20', rows: [{ name: 'One Shot', number: 144, level: 'difficult', direction: 'right' }, { name: 'Sunshine', number: 145, level: 'difficult', direction: 'right' }, { ...OT, direction: 'left' }] },
+  { id: '22', rows: [{ name: 'To Commandments', number: 115, level: 'difficult', direction: 'right' }, { name: "To Fatty's Crack", number: 136, level: 'difficult', direction: 'right' }, { ...OT, direction: 'left' }] },
+  { id: '16', rows: [{ name: 'To Cabins', level: 'destination', destination: 'cabins', direction: 'left' }, { ...OT, direction: 'right' }] },
+];
+const OPTS = {
+  arrows: { label: 'Arrow placement', hint: 'Edges = left arrows left, right arrows right. One column frees the second arrow slot on mixed boards.', o: [['edges', 'Edges'], ['left', 'All left'], ['right', 'All right']] },
+  face: { label: 'Name typeface', hint: 'Barlow = recommended. Anton is caps only.', o: [['barlow', 'Barlow SC'], ['overpass', 'Overpass'], ['atkinson', 'Atkinson'], ['anton', 'Anton']] },
+  case: { label: 'Name case', hint: 'Mixed case reads ~15% farther at the same cap height.', o: [['mixed', 'Mixed'], ['caps', 'All caps']] },
+  cap: { label: 'Cap height', hint: 'Height of a capital letter. ~30–40 ft per inch.', o: [['1.25', '1.25″'], ['1.5', '1.5″'], ['1.72', '1.72″'], ['2', '2″']] },
+  badge: { label: 'Green Line badge', hint: 'Stacked prints GREEN over LINE, about half the width.', o: [['beside', 'Beside'], ['stacked', 'Stacked'], ['under', 'Under name']] },
+  spill: { label: 'Unused arrow slot', hint: 'On mixed boards, a left-arrow row may run its name into the empty right-arrow slot.', o: [['reserve', 'Reserve'], ['use', 'Name can use it']] },
+  to: { label: '“To” prefix', hint: 'The arrow already says “this way to”.', o: [['keep', 'Keep'], ['drop', 'Drop']] },
+  frame: { label: 'Frame & margin', hint: 'Slim: 0.25″ frame, tighter side padding.', o: [['standard', 'Standard'], ['slim', 'Slim']] },
+};
+const DEFAULTS = { arrows: 'left', face: 'barlow', case: 'mixed', cap: '1.5', badge: 'under', spill: 'use', to: 'drop', frame: 'slim' };
+const FACES = { anton: { css: "'Anton', Impact, sans-serif", w: 400, capsOnly: true }, barlow: { css: "'Barlow Semi Condensed', sans-serif", w: 700 }, overpass: { css: "'Overpass', sans-serif", w: 700 }, atkinson: { css: "'Atkinson Hyperlegible Next', sans-serif", w: 700 } };
+
+const ctx = document.createElement('canvas').getContext('2d');
+const tw = (s, f) => { ctx.font = '100px Anton, Impact, sans-serif'; return (ctx.measureText(String(s).toUpperCase()).width / 100) * f * 1.01; };
+const capRatio = F => { ctx.font = `${F.w} 100px ${F.css}`; return ctx.measureText('H').actualBoundingBoxAscent / 100 || 0.72; };
+const fw = (s, fs, F) => { ctx.font = `${F.w} 100px ${F.css}`; return (ctx.measureText(String(s)).width / 100) * fs * 1.01; };
+const MV = { straight: 0, up: 0, back: 0, down: 0, right: 1, left: -1, 'bear-right': 0.7, 'bear-left': -0.7, 'back-right': 0.7, 'back-left': -0.7 };
+const netX = d => String(d).split('-then-').reduce((x, m, i, a) => x + (MV[m] || 0) * (a.length > 1 && i === 0 ? 1.4 : 1), 0);
+const side = d => (netX(d) > 0.05 ? 'R' : 'L');
+const orderKey = d => { const x = netX(d); return Math.abs(x) <= 0.05 ? 0 : x < 0 ? 1 : 2; };
+
+function geom(s) {
+  const C = +s.cap, F = FACES[s.face] || FACES.barlow, caps = F.capsOnly || s.case === 'caps';
+  const L = C / 0.86, nfs = C / capRatio(F);
+  const nw = n => fw(caps ? String(n).toUpperCase() : n, nfs, F);
+  const fr = s.frame === 'slim' ? { inset: 0.25, frame: 0.25, pad: 0.35 } : { inset: 0.25, frame: 0.375, pad: 0.6 };
+  const gap = L * 0.25, sym = L * 1.45, arrow = L * 1.5;
+  const content = W - 2 * (fr.inset + fr.frame + fr.pad);
+  const bH = s.badge === 'stacked' ? L * 1.25 : L * 0.85;
+  const badgeW = s.badge === 'under' ? 0 : (s.badge === 'stacked' ? fw('GREEN', bH * 0.42, F) : fw('GREEN LINE', bH * 0.62, F)) + bH * 0.5 + gap;
+  const area = (cols, badge) => content - sym - gap - cols * (arrow + gap) - (badge ? badgeW : 0);
+  return { L, C, F, caps, nfs, nw, fr, gap, sym, arrow, bH, area };
+}
+const label = (n, s) => (s.to === 'drop' ? String(n).replace(/^To /i, '') : n);
+
+function Badge({ s, g }) {
+  const base = { background: ROUTE, color: '#fff', fontFamily: g.F ? g.F.css : 'var(--font-sign)', fontWeight: g.F ? g.F.w : 400, textTransform: 'uppercase', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' };
+  if (s.badge === 'stacked') return <div style={{ ...base, height: g.bH * u, padding: `0 ${g.bH * 0.25 * u}px`, flexDirection: 'column', fontSize: g.bH * 0.42 * u, gap: g.bH * 0.06 * u, paddingTop: g.bH * 0.04 * u }}><span>Green</span><span>Line</span></div>;
+  return <div style={{ ...base, height: g.bH * u, padding: `${g.bH * 0.04 * u}px ${g.bH * 0.25 * u}px 0`, fontSize: g.bH * 0.62 * u, whiteSpace: 'nowrap' }}>Green Line</div>;
+}
+
+function Row({ r, s, g, cols, colL, colR }) {
+  const name = label(r.name, s), routeRow = !!r.route;
+  const sd = s.arrows === 'edges' ? side(r.direction) : s.arrows === 'left' ? 'L' : 'R';
+  const eff = s.spill === 'use' && colL && colR && sd === 'L' ? cols - 1 : cols;
+  const need = g.nw(name), area = g.area(eff, routeRow && s.badge !== 'under');
+  const fits = need <= area + 0.01;
+  const arrow = <DirectionArrow direction={r.direction} level={LEVELS[r.level] ? r.level : undefined} color={LEVELS[r.level] ? undefined : r.level === 'destination' ? undefined : 'var(--hp-gray-400)'} size={g.arrow * u} strokeWidth={3.75} />;
+  const slot = (on) => <div style={{ width: g.arrow * u, flex: 'none', display: 'flex', justifyContent: 'center' }}>{on && arrow}</div>;
+  const mark = r.level === 'destination' ? <DestinationIcon destination={r.destination} size={g.sym * 0.9 * u} strokeWidth={3} /> : <TrailSymbol level={r.level} number={r.number ?? ''} size={(r.level === 'difficult' ? g.sym * 1.1 : g.sym) * u} />;
+  const nameEl = <div style={{ fontFamily: g.F.css, fontWeight: g.F.w, fontSize: g.nfs * u, lineHeight: 1, textTransform: g.caps ? 'uppercase' : 'none', whiteSpace: 'nowrap', paddingTop: g.C * 0.08 * u }}>{name}</div>;
+  return <div style={{ height: 4 * u, display: 'flex', alignItems: 'center', gap: g.gap * u, padding: `0 ${(g.fr.inset + g.fr.frame + g.fr.pad) * u}px`, outline: fits ? 'none' : '2px dashed var(--hp-red)', outlineOffset: -3, position: 'relative' }}>
+    {colL && slot(sd === 'L')}
+    <div style={{ width: g.sym * u, flex: 'none', display: 'flex', justifyContent: 'center' }}>{mark}</div>
+    {routeRow && s.badge === 'under'
+      ? <div style={{ display: 'flex', flexDirection: 'column', gap: 0.2 * u, alignItems: 'flex-start' }}>{nameEl}<Badge s={{ badge: 'beside' }} g={{ ...g, bH: g.C * 0.95 }} /></div>
+      : <>{nameEl}{routeRow && <Badge s={s} g={g} />}</>}
+    <div style={{ flex: 1 }}></div>
+    {colR && (eff < cols ? null : slot(sd === 'R'))}
+    {!fits && <div style={{ position: 'absolute', right: 6, top: 4, fontSize: 10, fontWeight: 700, color: 'var(--hp-red)', background: '#fff', padding: '0 3px' }}>+{(need - area).toFixed(1)}″</div>}
+  </div>;
+}
+
+const HEIGHTS = [[2, 12], [3, 16], [5, 24]];
+function Board({ sample, s }) {
+  const g = geom(s);
+  const rows = sample.rows.map((r, i) => ({ r, i })).sort((a, b) => orderKey(a.r.direction) - orderKey(b.r.direction) || a.i - b.i).map(o => o.r);
+  const sides = new Set(rows.map(r => side(r.direction)));
+  const colL = s.arrows === 'left' || (s.arrows === 'edges' && sides.has('L'));
+  const colR = s.arrows === 'right' || (s.arrows === 'edges' && sides.has('R'));
+  const cols = (colL ? 1 : 0) + (colR ? 1 : 0);
+  const H = (HEIGHTS.find(([n]) => rows.length <= n) || [0, 24])[1];
+  const hdr = H - 4 * rows.length;
+  return <div className="bwrap">
+    <div style={{ position: 'relative', width: W * u, height: H * u, background: '#fff', borderRadius: 0.5 * u, boxShadow: '0 1px 2px rgba(0,0,0,.18)' }}>
+      <div style={{ position: 'absolute', inset: g.fr.inset * u, border: `${g.fr.frame * u}px solid var(--hp-black)`, borderRadius: 0.3 * u }}></div>
+      <div style={{ height: hdr * u, display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: (g.fr.inset + g.fr.frame) * u * 0.5 }}><img src={LOGO} alt="Hawk Pride" style={{ height: Math.min(hdr - 1.2, 4.2) * u }} /></div>
+      {rows.map((r, i) => <Row key={i} r={r} s={s} g={g} cols={cols} colL={colL} colR={colR} />)}
+    </div>
+    <div className="cap">Sign {sample.id} · 24″ × {H}″{rows.length > 5 ? ' · over 5 rows: split into two boards' : ''}</div>
+  </div>;
+}
+
+function Stats({ s }) {
+  const g = geom(s);
+  const names = [...new Set(TRAIL_INVENTORY.map(t => t.name).filter(Boolean))];
+  const one = names.filter(n => g.nw(n) <= g.area(1, false));
+  const mixedCols = s.arrows === 'edges' ? 2 : 1;
+  const mixed = names.filter(n => g.nw(n) <= g.area(mixedCols, false));
+  const otOne = g.nw('Outfitter Trail') <= g.area(1, s.badge !== 'under'), otMixed = g.nw('Outfitter Trail') <= g.area(mixedCols, s.badge !== 'under');
+  const k = g.caps ? 1 : 1.15; const dist = Math.round(g.C * 30 * k) + '–' + Math.round(g.C * 40 * k) + ' ft';
+  const missing = names.filter(n => g.nw(n) > g.area(mixedCols, false)).sort((a, b) => g.nw(b) - g.nw(a));
+  React.useEffect(() => {
+    document.getElementById('misspanel').innerHTML = `<div class="lab" style="margin-bottom:8px">Names that need a short sign name with these rules (${missing.length})</div>` + (missing.length ? `<ul class="miss">${missing.map(n => `<li>${n}</li>`).join('')}</ul>` : '<div class="hint">None.</div>');
+  });
+  return <>
+    <div className="stat"><div className="lab">Readable to about</div><div className="big">{dist}</div></div>
+    <div className="stat"><div className="lab">Names fit · arrows one side</div><div className="big">{one.length} / {names.length}</div><div className="hint">{g.area(1, false).toFixed(1)}″ for the name</div></div>
+    <div className="stat"><div className="lab">Names fit · mixed-direction board</div><div className="big">{mixed.length} / {names.length}</div><div className="hint">{g.area(mixedCols, false).toFixed(1)}″ for the name</div></div>
+    <div className="stat"><div className="lab">Outfitter Trail + badge</div><div className="big">{otMixed ? 'Always' : otOne ? 'One side' : 'No'}</div><div className="hint">{otMixed ? 'Fits on every board' : otOne ? 'Not on mixed-direction boards' : 'Badge must go under the name'}</div></div>
+  </>;
+}
+
+function App() {
+  const [s, set] = React.useState(() => ({ ...DEFAULTS, ...JSON.parse(localStorage.getItem('hp-fit2') || '{}') }));
+  const pick = (k, v) => set(p => { const n = { ...p, [k]: v }; localStorage.setItem('hp-fit2', JSON.stringify(n)); return n; });
+  const [, tick] = React.useState(0);
+  React.useEffect(() => { Promise.all(Object.values(FACES).map(F => document.fonts.load(`${F.w} 100px ${F.css.split(',')[0]}`))).then(() => document.fonts.ready).then(() => tick(t => t + 1)); }, []);
+  return <>
+    {ReactDOM.createPortal(Object.entries(OPTS).map(([k, o]) => <div key={k} className="ctl"><div className="lab">{o.label}</div><div className="seg">{o.o.map(([v, l]) => <button key={v} className={s[k] === v ? 'on' : ''} onClick={() => pick(k, v)}>{l}</button>)}</div><div className="hint">{o.hint}</div></div>), document.getElementById('ctrls'))}
+    {ReactDOM.createPortal(<Stats s={s} />, document.getElementById('stats'))}
+    {SAMPLES.map(sm => <Board key={sm.id} sample={sm} s={s} />)}
+  </>;
+}
+ready.then(() => ReactDOM.createRoot(document.getElementById('boards')).render(<App />));
+</script></body></html>

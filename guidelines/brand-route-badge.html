@@ -1,0 +1,32 @@
+<!-- @dsCard group="Brand" viewport="700x390" name="Green Line badge spec" subtitle="Route badge proportions, sizes and clear space" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>body{margin:0;padding:20px 24px;font-family:var(--font-body);background:#fff;color:var(--text-body)}.l{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}table{border-collapse:collapse;font-size:12px}td{padding:3px 10px 3px 0;vertical-align:top}td:first-child{font-weight:700;white-space:nowrap}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const { RouteBadge } = window.HawkPrideSignageDesignSystem_931354;
+const H = 80, pink = '#e0218a';
+function Spec() {
+  return <div style={{ position: 'relative', display: 'inline-block', padding: H * 0.25, outline: '1px dashed ' + pink }}>
+    <RouteBadge height={H} />
+    <div style={{ position: 'absolute', left: -46, top: H * 0.25, height: H, borderLeft: '1px solid ' + pink, fontSize: 11, color: pink, display: 'flex', alignItems: 'center', paddingLeft: 4 }}>H</div>
+    <div style={{ position: 'absolute', left: H * 0.25, top: H * 0.25 + H * 0.24, width: H * 0.25, height: H * 0.52, background: pink + '22', borderTop: '1px solid ' + pink, borderBottom: '1px solid ' + pink }}></div>
+    <div style={{ position: 'absolute', left: 0, bottom: -16, fontSize: 10, color: pink }}>clear space 0.25 H all round</div>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<div style={{ display: 'flex', gap: 36, alignItems: 'flex-start' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 26, paddingLeft: 46, paddingTop: 6 }}><Spec />
+    <div style={{ display: 'flex', gap: 14, alignItems: 'flex-end' }}>{[1, 2.2, 3].map(h => <div key={h} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}><RouteBadge height={h * 16} /><span className="l">{h}″</span></div>)}</div></div>
+  <table><tbody>
+    <tr><td>Color</td><td>Route green #0B5D33 (<code>--route-green-line</code>), white letters</td></tr>
+    <tr><td>Shape</td><td>Rectangle, square corners, no border or outline</td></tr>
+    <tr><td>Lettering</td><td>GREEN LINE, Anton caps, one line, cap height 0.52 H, tracking 0.02 em, cap height centred</td></tr>
+    <tr><td>Side padding</td><td>0.25 H each side; width follows the label (~2.96 H)</td></tr>
+    <tr><td>Clear space</td><td>0.25 H on every side</td></tr>
+    <tr><td>Sizes (H)</td><td>Board 1″ · route marker 2.2″ · street plaque 3″ · marker decal 1″</td></tr>
+    <tr><td>Minimum</td><td>H = 1″</td></tr>
+  </tbody></table>
+</div>);
+</script></body></html>

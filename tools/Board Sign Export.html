@@ -1,0 +1,69 @@
+<!-- @dsCard group="Sign Kit" viewport="1100x700" name="Board sign SVG export" subtitle="Print file: exact size, 300 DPI, outlined text" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Board Sign SVG Export</title><link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<script src="boardSvgExport.js"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:var(--font-body);color:var(--text-body);background:var(--hp-gray-100)}a{color:var(--hp-black)}a:hover{color:var(--difficulty-moderate)}
+.wrap{max-width:1200px;margin:0 auto;padding:24px;display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:24px;align-items:start}
+h1{font-family:var(--font-display);font-weight:400;font-size:30px;text-transform:uppercase;margin:0 0 4px;line-height:1}
+.panel{background:#fff;border:1px solid var(--border-default);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:12px}
+label{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);display:flex;flex-direction:column;gap:6px}
+select,input[type=text],textarea{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--border-strong,#999);border-radius:4px;text-transform:none;letter-spacing:0;color:var(--text-body);font-weight:400}
+textarea{font-family:ui-monospace,Menlo,monospace;font-size:12px;min-height:260px;resize:vertical}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chk{flex-direction:row;align-items:center;text-transform:none;letter-spacing:0;font-size:14px;color:var(--text-body);font-weight:600}
+button{font:inherit;font-weight:800;font-size:15px;border:none;border-radius:4px;padding:12px 18px;cursor:pointer;background:var(--hp-black);color:var(--hp-yellow)}
+button:hover{background:#333}button:disabled{opacity:.5;cursor:default}
+.prev{background:#fff;border:1px solid var(--border-default);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.prev img{width:100%;max-width:760px;display:block;margin:0 auto;box-shadow:0 0 0 1px var(--border-default)}
+.meta{font-size:14px;display:flex;gap:16px;flex-wrap:wrap}.meta b{font-weight:800}
+.err{background:#FDE7E9;border-radius:4px;padding:10px 12px;font-size:14px}
+.ok{background:#E3F2E7;border-radius:4px;padding:10px 12px;font-size:14px}
+.muted{color:var(--text-muted);font-size:13px}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}}</style></head><body>
+<div class="wrap">
+<div class="panel">
+<div><h1>Board sign SVG export</h1><div class="muted">Print file at the sign's exact size (24″ wide × 6/12/16/20/24″), 300 DPI, all text converted to outlines.</div></div>
+<label>Start from<select id="preset"></select></label>
+<label>Sign spec (JSON)<textarea id="spec" spellcheck="false"></textarea></label>
+<label class="chk"><input type="checkbox" id="bleed"> Add 0.125″ bleed (only if the printer asks for it)</label>
+<div class="row"><button id="go">Download SVG</button><span class="muted" id="status"></span></div>
+<div class="muted">Rows: <code>name</code>, <code>number</code>, <code>level</code> (easy · moderate · difficult · extreme · access · destination), <code>direction</code>, optional <code>route: "green-line"</code>, <code>destination</code>. Order and size are automatic.</div>
+</div>
+<div class="prev"><div class="meta" id="meta"></div><div id="msg"></div><img id="img" alt="Board sign preview"></div>
+</div>
+<script>
+const OT = { name: 'Outfitter Trail', number: '100', level: 'easy', route: 'green-line' };
+const PRESETS = {
+  'GL-02 · 1 entry (24×6)': { signId: 'GL-02', rows: [{ ...OT, direction: 'right' }] },
+  'GL-04 · 3 entries (24×16)': { signId: 'GL-04', rows: [{ name: 'Ridgeline', number: '81', level: 'access', direction: 'left' }, { name: 'Lower Ridgeline', number: '101', level: 'moderate', direction: 'right' }, { ...OT, direction: 'straight' }] },
+  'GL-16 · 2 entries (24×12)': { signId: 'GL-16', rows: [{ name: 'Cabins', level: 'destination', destination: 'cabins', direction: 'left' }, { ...OT, direction: 'right' }] },
+  'GL-08 · 4 entries (24×20)': { signId: 'GL-08', rows: [{ ...OT, direction: 'straight' }, { name: 'Thompson Trail', number: '71', level: 'moderate', route: 'green-line', direction: 'left' }, { name: 'Ridgeline', number: '81', level: 'access', direction: 'right' }, { name: 'Check-In', level: 'destination', destination: 'check-in', direction: 'back-right' }] },
+  'GL-06 · 5 entries (24×24)': { signId: 'GL-06', rows: [{ ...OT, direction: 'left' }, { name: 'Vertical Limit', number: '103', level: 'difficult', direction: 'straight' }, { name: "Jake's Hill", number: '102', level: 'difficult', direction: 'straight' }, { name: 'Cabins', level: 'destination', destination: 'cabins', direction: 'straight-then-right' }, { name: 'Frame Twister', number: '11', level: 'extreme', direction: 'bear-right' }] },
+};
+const $ = id => document.getElementById(id);
+$('preset').innerHTML = Object.keys(PRESETS).map(k => `<option>${k}</option>`).join('');
+const setPreset = () => { $('spec').value = JSON.stringify(PRESETS[$('preset').value], null, 2); run(false); };
+$('preset').onchange = setPreset;
+let last = null, url = null, timer;
+async function run(download) {
+  let spec;
+  try { spec = JSON.parse($('spec').value); } catch (e) { $('msg').innerHTML = `<div class="err">JSON error: ${e.message}</div>`; return; }
+  $('status').textContent = 'Building…';
+  try {
+    last = await HPBoardSVG.exportSVG({ ...spec, bleed: $('bleed').checked });
+  } catch (e) { $('msg').innerHTML = `<div class="err">${e.message}</div>`; $('status').textContent = ''; return; }
+  if (url) URL.revokeObjectURL(url);
+  url = URL.createObjectURL(new Blob([last.svg], { type: 'image/svg+xml' }));
+  $('img').src = url;
+  $('meta').innerHTML = `<span><b>${last.filename}</b></span><span>${last.width}″ × ${last.height}″ trim${$('bleed').checked ? ' + bleed' : ''}</span><span>${last.width * 300} × ${last.height * 300} px @ 300 DPI</span><span>${Math.round(last.svg.length / 1024)} KB</span>`;
+  $('msg').innerHTML = last.problems.length ? `<div class="err"><b>Not ready to print:</b> ${last.problems.join(' ')}</div>` : `<div class="ok">Meets the board standard. Ready for proof.</div>`;
+  $('status').textContent = '';
+  if (download) { const a = document.createElement('a'); a.href = url; a.download = last.filename; a.click(); }
+}
+$('go').onclick = () => run(true);
+$('spec').oninput = () => { clearTimeout(timer); timer = setTimeout(() => run(false), 400); };
+$('bleed').onchange = () => run(false);
+setPreset();
+</script></body></html>

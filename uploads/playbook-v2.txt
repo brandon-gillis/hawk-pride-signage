@@ -1,0 +1,254 @@
+pages 11
+
+=== PAGE 1 ===
+Trail Rating, Navigation & Signage Playbook
+Consolidated system design and implementation roadmap — November 2026
+=== PAGE 2 ===
+Executive overview 3
+Part 1 - The trail difficulty rating system 5
+HAWK PRIDE TRAIL DIFFICULTY LEGEND 5
+OFFICIAL CLASSIFICATION 5
+CONVERSION FROM CARTOTRACKS 6
+IMPORTANT RATING PRINCIPLES 6
+Part 2 — The primary navigation network 6
+HOW THE NETWORK WILL FUNCTION 7
+WHAT REMAINS UNDECIDED 7
+Part 3 — The three sign types 7
+TYPE 1 — STREET SIGNS 8
+DESIGN REQUIREMENTS: 8
+HOW AND WHEN TO USE: 8
+TYPE 2 — BOARD SIGNS 8
+DESIGN REQUIREMENTS 9
+HOW AND WHEN TO USE: 9
+TYPE 3 — TRAIL MARKERS 9
+DESIGN REQUIREMENTS 9
+WHEN TO USE: 10
+Part 4 — Unified visual language 10
+=== PAGE 3 ===
+Executive overview
+We are developing a standardized trail rating, navigation, and signage system for Hawk Pride
+Offroad.
+The objective is to make the park easier to navigate, safer to explore, and more intuitive for
+first-time visitors, without turning the experience into something overly structured or
+guided.
+We are working from the existing CartoTracks map, assuming its trail ratings are accurate.
+The map is widely considered difficult to read by both staff and customers, and most
+visitors rely on the GPS-enabled app to understand their location.
+Our solution has four fundamental components:
+1. A simplified, four-level trail difficulty rating system.
+2. A primary navigation network connecting important areas of the park.
+3. Three standardized sign types, each with a distinct purpose.
+4. A consistent visual language connecting trail signs, markers, maps, and digital
+navigation.
+The system should allow a rider to recognize trail difficulty at a glance, identify where they
+are, and make their own decisions about where to explore.
+Part 1 - The trail difficulty rating system
+We are reducing the existing six CartoTracks classifications to four difficulty levels, plus
+access roads.
+=== PAGE 4 ===
+HAWK PRIDE TRAIL DIFFICULTY LEGEND
+OFFICIAL CLASSIFICATION
+Color Symbol Classification Map Key Description
+Green Circle Easy
+Maintained dirt, mild grades, small rocks
+and shallow ruts
+Most stock off-road vehicles
+Blue Square Moderate
+Rougher surfaces, steeper grades, rocks,
+deeper ruts and some technical features
+Capable 4WD / UTV • good clearance
+recommended
+Red Diamond Difficult
+Large obstacles, steep climbs, technical
+lines, deep ruts and off-camber terrain
+Modified vehicles and experienced
+drivers recommended
+Purple Double
+diamond Extreme
+Severe climbs, major ledges, boulders
+and highly technical terrain
+Highly modified / purpose-built vehicles
+and experienced drivers
+Gray /
+black None Access Road General access routes, not part of the
+difficulty scale
+=== PAGE 5 ===
+CONVERSION FROM CARTOTRACKS
+Existing classification New classification
+1 — Paved or Dirt Road Access Road
+2 — Easy Easy
+3 — Moderate Moderate
+4 — Moderate Hard Difficult
+5 — Hard Difficult
+6 — Extreme Extreme
+Both existing levels 4 and 5 become Red / Difficult.
+We will preserve all existing trail identification numbers and names. The conversion does not
+require us to reassess every trail initially.
+IMPORTANT RATING PRINCIPLES
+Terrain defines difficulty, not equipment. We will explain what riders should expect on the
+trail and provide general vehicle guidance, but not require specific tire sizes, lockers, or
+modifications for particular ratings.
+The rating should reflect the hardest unavoidable section under normal conditions. A
+difficult obstacle with an easy bypass can be identified separately from the easier route.
+Equipment guidance belongs primarily on the park legend, map, website, or other reference
+material rather than on every sign.
+Vehicle restrictions, such as ATV-only access, are separate from difficulty. They should be
+communicated only where applicable.
+We will not retain special classification colors for individual trails, such as the discontinued
+Blue Polaris Outfitter Trail.
+Part 2 — The primary navigation network
+This is the organizational foundation of the system.
+=== PAGE 6 ===
+Today, the park contains a large number of interconnected numbered trails without a
+particularly obvious hierarchy.
+We intend to identify a smaller subset of existing trails that will serve as primary navigation
+routes.
+These routes will help riders travel through the park, reach major destinations, and establish
+a mental picture of how the park connects.
+HOW THE NETWORK WILL FUNCTION
+Primary navigation routes will:
+● Connect major areas and recognizable landmarks.
+● Be identifiable through street-style trail signs.
+● Appear prominently on the map.
+● Provide a useful orientation framework without prescribing where people should ride.
+Other trails remain available for exploration and are identified using trail markers.
+Not every trail will be part of the primary navigation system.
+Importantly, a trail's role as a primary navigation route and its difficulty classification are
+independent. A primary route can technically have any difficulty rating, although we should
+ensure practical, accessible connections between essential visitor destinations.
+WHAT REMAINS UNDECIDED
+We have not yet selected the specific trails that will form the primary navigation network.
+This must be determined before we finalize sign locations.
+Part 3 — The three sign types
+We have established three general navigation sign types. Each communicates difficulty
+using the same colors, but differently according to its purpose.
+TYPE 1 — STREET SIGNS
+Purpose: Identify the key trails that make up the
+primary navigation network.
+=== PAGE 7 ===
+Standard reflective metal street signs on posts. The entire background color indicates trail
+difficulty.
+Every intersection between primary navigation routes should have the necessary street
+signs. These are similar to conventional road-name signs.
+DESIGN REQUIREMENTS:
+● Reflective metal construction.
+● Standard street-sign format and mounting hardware.
+● Large, high-contrast lettering.
+● Trail name and potentially trail number.
+● Full sign background colored according to trail difficulty.
+A purple street sign identifies an Extreme route even if the double-diamond symbol is
+absent.
+HOW AND WHEN TO USE:
+These signs are reserved for the main navigation network, not every trail in the park. These
+should only be placed at the beginning of main navigation trails and at intersection of main
+navigation trails.
+TYPE 2 — BOARD SIGNS
+Purpose: Help riders make navigation decisions at major intersections.
+Larger printed, PVC signs containing destinations or trail
+names with directional arrows.
+The color of each arrow communicates its meaning: trail
+difficulty or general destination.
+These are placed at major decision points where someone
+needs more guidance than a street sign provides.
+They may identify individual trails or direct visitors toward
+locations such as the campground, check-in, or important
+trail destinations.
+=== PAGE 8 ===
+DESIGN REQUIREMENTS
+Each board should have the trail name, number and difficulty symbol.
+● Green = Easy trail
+● Blue = Moderate trail
+● Red = Difficult trail
+● Purple = Extreme trail
+● Black = Destination or general wayfinding
+HOW AND WHEN TO USE:
+At trail intersections - Where to buy
+TYPE 3 — TRAIL MARKERS
+Purpose: Identify individual trails and help riders confirm
+they are following the intended route.
+Small, inexpensive posts with trail number decals and colored
+difficulty symbols.
+These are the smallest and most numerous elements of the
+system.
+They identify which trail someone is following.
+For example, along an Easy trail, a rider encounters green
+circle markers confirming they remain on that trail.
+DESIGN REQUIREMENTS
+A typical marker should contain:
+● The existing trail identification number.
+● The colored difficulty symbol.
+● A directional indicator where needed.
+The intended placement includes trail entrances, confusing intersections, immediately after
+major junctions, and places where a route becomes difficult to follow.
+=== PAGE 9 ===
+The marker is not intended as an expensive miniature street sign. It should be a simple,
+durable, easily replaceable post and decal system.
+WHEN TO USE:
+Installed on trail where they are needed for identification, reassurance, and navigation.
+Part 4 — Unified visual language
+The system is designed so that riders learn one association and recognize it everywhere.
+Meaning Street sign Board sign Trail marker Map
+Easy Green background Green arrow Green circle Green trail line
+Moderate Blue background Blue arrow Blue square Blue trail line
+Difficult Red background Red arrow Red diamond Red trail line
+Extreme Purple background Purple arrow Purple double
+diamond Purple trail line
+Destination Matching
+Icon
+Destination
+label/icon
+Access
+Road Brown Black arrow Black/gray road
+line
+The goal is for someone to understand the meaning of a sign without having to stop, consult
+a legend, or pull out their phone.
+The same standards should ultimately be applied across physical signs, printed maps, the
+website, and digital map experiences.
+Part 5 - NAVIGATION ROUTE IDENTIFICATION
+Primary navigation routes, such as the Green Line, are separate from the individual trails
+that make up those routes.
+=== PAGE 10 ===
+For example, Thompson Trail (#71) is a Moderate (Blue) trail that forms part of the Green
+Line navigation system.
+To distinguish these two concepts, Hawk Pride will use a standardized Navigation Route
+Badge.
+The badge identifies membership in a primary navigation system without replacing or
+interfering with the trail's existing name, number, or difficulty classification.
+CORE PRINCIPLE
+Every trail has its own identity and difficulty classification. A primary navigation route is a
+connected journey through multiple trails.
+The signage system must communicate both independently:
+● Trail Number and Name: Identifies the individual trail.
+● Difficulty Color and Symbol: Communicates the terrain difficulty.
+● Navigation Route Badge: Identifies membership in a larger navigational system.
+This allows visitors to follow the Green Line while understanding the difficulty of each
+individual trail they encounter.
+DESIGN REQUIREMENTS
+● Each primary navigation system will have its own distinctive, named route badge.
+● The Green Line will use a green rectangular badge displaying "GREEN LINE" in white
+lettering.
+● The badge must be visually distinct from the green circle used to identify Easy trails.
+● Badges will be incorporated into existing street signs, board signs, and trail markers
+where appropriate.
+● Additional navigation systems can be introduced later using the same design
+convention.
+HOW THE BADGE WILL BE USED
+Street Signs
+On primary navigation trails that form part of the Green Line, a small Green Line badge will
+accompany the standard street sign. The street sign's background color will continue to
+represent the difficulty of the individual trail.
+=== PAGE 11 ===
+Board Signs
+Where a board sign directs riders along a trail that forms part of the Green Line, the Green
+Line badge will appear alongside the trail information and directional arrow.
+Trail Markers
+Trail markers along the Green Line will display the route badge in addition to the existing
+trail number and difficulty symbol.
+ROUTE CONTINUITY AND DIRECTION
+The Green Line is a continuous route that follows multiple existing trails. At intersections
+where the Green Line changes direction or transitions between trails, directional Green Line
+markers will indicate which way riders should travel to remain on the route.
+These markers will use the Green Line badge with an accompanying directional arrow.
+Route identification must follow the actual Green Line path. If only a portion of an existing
+trail is part of the Green Line, badges and directional indicators should apply only to that
+portion.

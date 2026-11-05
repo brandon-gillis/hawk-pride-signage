@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Board Header Layout Tool</title><link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:var(--font-body);color:var(--text-body);background:var(--hp-gray-100)}a{color:var(--hp-black)}a:hover{color:var(--difficulty-moderate)}
+.wrap{max-width:1500px;margin:0 auto;padding:20px;display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px;align-items:start}
+h1{font-family:var(--font-display);font-weight:400;font-size:26px;text-transform:uppercase;margin:0;line-height:1}
+.panel{background:#fff;border:1px solid var(--border-default);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:14px;position:sticky;top:20px}
+.ctl{display:flex;flex-direction:column;gap:4px}.ctl label{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);display:flex;justify-content:space-between}
+.ctl label b{color:var(--text-body);font-variant-numeric:tabular-nums;letter-spacing:0}
+input[type=range]{width:100%}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;font-weight:700;font-size:13px;border:1px solid var(--hp-black);border-radius:4px;padding:8px 10px;cursor:pointer;background:#fff;color:var(--hp-black)}
+button.pri{background:var(--hp-black);color:var(--hp-yellow)}button:hover{background:var(--hp-gray-100)}button.pri:hover{background:#333}
+pre{margin:0;font-size:12px;line-height:1.5;background:var(--hp-gray-100);border-radius:4px;padding:10px;white-space:pre-wrap}
+.muted{font-size:12px;color:var(--text-muted);line-height:1.45}
+.stage{overflow:auto;background:#cfcfca;border-radius:6px;padding:24px}
+#board{position:relative;margin:0 auto;width:max-content}
+.drag{position:absolute;cursor:grab;user-select:none;touch-action:none;outline:1px dashed transparent;outline-offset:2px}
+.drag:hover,.drag.sel{outline-color:#e0218a}.drag:active{cursor:grabbing}
+.drag img{display:block;height:100%;pointer-events:none}
+.word{font-family:var(--font-sign);line-height:1;text-transform:uppercase;white-space:nowrap;color:#fff;letter-spacing:.02em}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600}</style></head><body>
+<div class="wrap">
+<div class="panel">
+<h1>Header layout</h1>
+<div class="muted">Drag the brandmark and the title on the board. Arrow keys nudge the selected item by 0.05″ (Shift: 0.25″). Positions snap to 0.05″.</div>
+<div class="ctl"><label>Brandmark height <b id="vMark"></b></label><input type="range" id="mark" min="1.5" max="3.5" step="0.05"></div>
+<div class="ctl"><label>Title cap height <b id="vCap"></b></label><input type="range" id="cap" min="0.6" max="1.6" step="0.05"></div>
+<div class="ctl"><label>Title letter spacing <b id="vLs"></b></label><input type="range" id="ls" min="0" max="0.12" step="0.01"></div>
+<div class="ctl"><label>Header band height <b id="vBand"></b></label><input type="range" id="band" min="2.5" max="4.5" step="0.05"></div>
+<label class="chk"><input type="checkbox" id="guides" checked> Show margins &amp; centre line</label>
+<div class="btns"><button id="center">Centre as a group</button><button id="vcenter">Centre vertically</button><button id="reset">Reset to standard</button></div>
+<pre id="out"></pre>
+<div class="btns"><button class="pri" id="copy">Copy settings</button></div>
+<div class="muted">The band height sets the black area behind the header. If the header grows, the entries move down, so the board may need more height. Send me the copied settings and I'll make them the standard.</div>
+</div>
+<div class="stage"><div id="board"></div></div>
+</div>
+<script>
+const NS = window.HawkPrideSignageDesignSystem_931354, B = NS.BOARD;
+const U = Math.max(14, Math.min(40, Math.floor((document.querySelector('.stage').clientWidth - 48) / NS.BOARD.width))); // px per inch, fits the stage
+const W = B.width, MARGIN = B.margin;
+const ROWS = [{ name: 'Ridgeline', number: 81, level: 'access', direction: 'left' }, { name: 'Lower Ridgeline', number: 101, level: 'moderate', direction: 'right' }, { name: 'Outfitter Trail', number: 100, level: 'easy', route: 'green-line', direction: 'straight' }];
+const ANTON_CAP = 0.86, KEY = 'hp-header-tool';
+const $ = id => document.getElementById(id), snap = v => Math.round(v / 0.05) * 0.05, f2 = v => (+v).toFixed(2) + '″';
+let S, sel = null, markAspect = 500 / 256, host, markEl, wordEl, bandEl, guideEl;
+function defaults() {
+  return { mark: { h: B.markHeight ?? 2.15, x: null, y: B.markTop ?? 1.1 }, word: { cap: B.wordmarkCap ?? 1.35, ls: 0.02, x: null, capTop: B.wordCapTop ?? 1.65 }, band: MARGIN + B.headerHeight + B.headerGap / 2, autoCenter: true };
+}
+function wordWidth() { return wordEl.getBoundingClientRect().width / U; }
+function centerGroup() {
+  const mw = S.mark.h * markAspect, ww = wordWidth(), gap = B.brandGap ?? 0.55, gx = (W - (mw + gap + ww)) / 2;
+  S.mark.x = snap(gx); S.word.x = snap(gx + mw + gap);
+}
+function centerV() {
+  const top = MARGIN, bottom = S.band; // centre within the black band below the top margin
+  S.mark.y = snap((top + bottom) / 2 - S.mark.h / 2);
+  S.word.capTop = snap((top + bottom) / 2 - S.word.cap / 2);
+}
+// Text box top from the desired cap top: Anton line box (line-height 1) — measured once.
+let capOffsetEm = 0;
+function measureCapOffset() {
+  const probe = document.createElement('div'); probe.className = 'word'; probe.style.cssText = 'position:absolute;visibility:hidden;font-size:100px'; probe.textContent = 'H';
+  document.body.appendChild(probe);
+  const c = document.createElement('canvas').getContext('2d'); c.font = '100px Anton'; const m = c.measureText('H');
+  const span = document.createElement('span'); span.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline'; probe.appendChild(span);
+  const base = span.getBoundingClientRect().top - probe.getBoundingClientRect().top;
+  capOffsetEm = (base - m.actualBoundingBoxAscent) / 100; probe.remove();
+}
+function render() {
+  const fs = S.word.cap / ANTON_CAP;
+  markEl.style.height = S.mark.h * U + 'px';
+  wordEl.style.fontSize = fs * U + 'px'; wordEl.style.letterSpacing = S.word.ls + 'em';
+  if (S.autoCenter || S.mark.x == null) { centerGroup(); S.autoCenter = false; }
+  markEl.style.left = S.mark.x * U + 'px'; markEl.style.top = S.mark.y * U + 'px';
+  wordEl.style.left = S.word.x * U + 'px'; wordEl.style.top = (S.word.capTop - capOffsetEm * fs) * U + 'px';
+  bandEl.style.height = S.band * U + 'px';
+  guideEl.style.display = $('guides').checked ? 'block' : 'none';
+  $('vMark').textContent = f2(S.mark.h); $('vCap').textContent = f2(S.word.cap); $('vLs').textContent = S.word.ls.toFixed(2) + ' em'; $('vBand').textContent = f2(S.band);
+  $('mark').value = S.mark.h; $('cap').value = S.word.cap; $('ls').value = S.word.ls; $('band').value = S.band;
+  const mw = S.mark.h * markAspect, ww = wordWidth();
+  const gapIn = S.word.x - (S.mark.x + mw), right = W - (S.word.x + ww);
+  const warn = [];
+  if (S.mark.x < MARGIN - 0.01 || right < MARGIN - 0.01) warn.push('closer than 1″ to a side edge');
+  if (S.mark.y < MARGIN - 0.01 || S.word.capTop < MARGIN - 0.01) warn.push('closer than 1″ to the top edge');
+  if (S.mark.y + S.mark.h > S.band + 0.01 || S.word.capTop + S.word.cap > S.band + 0.01) warn.push('runs past the black band');
+  $('out').textContent = `Brandmark: ${f2(S.mark.h)} tall × ${f2(mw)} wide\n  left ${f2(S.mark.x)} · top ${f2(S.mark.y)} from the board edge\nTitle: ${f2(S.word.cap)} cap height · ${S.word.ls.toFixed(2)} em spacing · ${f2(ww)} wide\n  left ${f2(S.word.x)} · cap top ${f2(S.word.capTop)}\nGap mark → title: ${f2(gapIn)}\nLeft / right clearance: ${f2(S.mark.x)} / ${f2(right)}\nBlack band: ${f2(S.band)} from the top` + (warn.length ? `\n\n⚠ ${warn.join('; ')}` : '');
+  localStorage.setItem(KEY, JSON.stringify(S));
+}
+function makeDrag(el, kind) {
+  el.tabIndex = 0;
+  el.addEventListener('pointerdown', e => {
+    sel = kind; document.querySelectorAll('.drag').forEach(d => d.classList.toggle('sel', d === el)); el.focus();
+    const sx = e.clientX, sy = e.clientY, o = kind === 'mark' ? { x: S.mark.x, y: S.mark.y } : { x: S.word.x, y: S.word.capTop };
+    el.setPointerCapture(e.pointerId);
+    const mv = ev => { const nx = snap(o.x + (ev.clientX - sx) / U), ny = snap(o.y + (ev.clientY - sy) / U); if (kind === 'mark') { S.mark.x = nx; S.mark.y = ny; } else { S.word.x = nx; S.word.capTop = ny; } render(); };
+    const up = () => { el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); };
+    el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up);
+  });
+  el.addEventListener('keydown', e => {
+    const d = e.shiftKey ? 0.25 : 0.05, k = { ArrowLeft: [-d, 0], ArrowRight: [d, 0], ArrowUp: [0, -d], ArrowDown: [0, d] }[e.key];
+    if (!k) return; e.preventDefault();
+    if (kind === 'mark') { S.mark.x = snap(S.mark.x + k[0]); S.mark.y = snap(S.mark.y + k[1]); } else { S.word.x = snap(S.word.x + k[0]); S.word.capTop = snap(S.word.capTop + k[1]); }
+    render();
+  });
+}
+Promise.all([document.fonts.load('100px Anton'), document.fonts.load('700 100px "Barlow Semi Condensed"')]).then(() => document.fonts.ready).then(() => {
+  measureCapOffset();
+  host = $('board');
+  ReactDOM.createRoot(host).render(React.createElement(NS.BoardSign, { rows: ROWS, signId: 'GL-04', ppi: U }));
+  setTimeout(() => {
+    const board = host.querySelector('[data-sign="board"]');
+    const img = board.querySelector('img'); const head = img.parentElement; head.style.visibility = 'hidden';
+    const band = head.previousElementSibling.previousElementSibling; // header band div
+    band.style.display = 'none';
+    markAspect = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : markAspect;
+    bandEl = document.createElement('div'); bandEl.style.cssText = `position:absolute;left:0;right:0;top:0;background:var(--sign-frame);border-radius:${B.corner * U}px ${B.corner * U}px 0 0`;
+    board.insertBefore(bandEl, board.firstChild.nextSibling);
+    guideEl = document.createElement('div'); guideEl.style.cssText = 'position:absolute;inset:0;pointer-events:none';
+    guideEl.innerHTML = `<div style="position:absolute;left:${MARGIN * U}px;right:${MARGIN * U}px;top:${MARGIN * U}px;bottom:${MARGIN * U}px;border:1px dashed #e0218a"></div><div style="position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #36c"></div>`;
+    markEl = document.createElement('div'); markEl.className = 'drag'; markEl.innerHTML = `<img src="${img.src}" alt="Brandmark">`;
+    wordEl = document.createElement('div'); wordEl.className = 'drag word'; wordEl.textContent = 'Hawk Pride Offroad';
+    board.append(markEl, wordEl, guideEl);
+    makeDrag(markEl, 'mark'); makeDrag(wordEl, 'word');
+    try { S = JSON.parse(localStorage.getItem(KEY)) || defaults(); } catch (e) { S = defaults(); }
+    render();
+  }, 150);
+});
+$('mark').oninput = e => { const c = S.mark.y + S.mark.h / 2; S.mark.h = +e.target.value; S.mark.y = snap(c - S.mark.h / 2); render(); };
+$('cap').oninput = e => { const c = S.word.capTop + S.word.cap / 2; S.word.cap = +e.target.value; S.word.capTop = snap(c - S.word.cap / 2); render(); };
+$('ls').oninput = e => { S.word.ls = +e.target.value; render(); };
+$('band').oninput = e => { S.band = +e.target.value; render(); };
+$('guides').onchange = render;
+$('center').onclick = () => { centerGroup(); render(); };
+$('vcenter').onclick = () => { centerV(); render(); };
+$('reset').onclick = () => { S = defaults(); render(); };
+$('copy').onclick = () => { navigator.clipboard.writeText($('out').textContent); $('copy').textContent = 'Copied'; setTimeout(() => $('copy').textContent = 'Copy settings', 1200); };
+</script></body></html>

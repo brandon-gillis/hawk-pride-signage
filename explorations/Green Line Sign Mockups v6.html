@@ -1,0 +1,234 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Green Line — Sign Mockups v6</title><link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../_ds_bundle.js"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:var(--font-body);color:var(--text-body);background:var(--surface-muted)}a{color:var(--text-body)}a:hover{color:var(--text-muted)}
+.wrap{max-width:1400px;margin:0 auto;padding:40px 32px 80px}
+h1{font-family:var(--font-display);font-weight:400;font-size:44px;line-height:1;text-transform:uppercase;margin:0}
+.top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;margin-top:20px;align-items:start}
+.std{margin:0;padding-left:18px;font-size:14px;line-height:1.5;display:flex;flex-direction:column;gap:4px;text-wrap:pretty}
+.panel{background:#fff;border:1px solid var(--border-default);padding:16px 20px}
+.ph{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin:0 0 10px}
+.sched{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}.sched td{padding:5px 0;border-top:1px solid var(--border-default)}.sched td:last-child{text-align:right;font-weight:700}
+.bar{display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-top:24px;font-size:13px}
+.li{display:flex;align-items:center;gap:8px}
+.seg{display:flex;margin-left:auto;border:2px solid var(--hp-black)}.seg button{white-space:nowrap;font:inherit;font-size:13px;font-weight:700;border:none;padding:6px 12px;background:#fff;cursor:pointer}.seg button.on{background:var(--hp-black);color:var(--hp-yellow)}
+.tog{margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(640px,1fr));gap:24px;margin-top:20px}
+.card{background:#fff;border:1px solid var(--border-default);display:flex;flex-direction:column;min-width:0}
+.chead{display:flex;align-items:center;gap:10px;padding:16px 20px 0;flex-wrap:wrap}
+.num{white-space:nowrap;font-weight:700;font-size:12px;background:var(--hp-black);color:var(--hp-yellow);padding:3px 8px;border-radius:3px;letter-spacing:.04em}
+.sid{white-space:nowrap;font-weight:700;font-size:12px;border:1.5px solid var(--hp-black);padding:2px 7px;border-radius:3px;letter-spacing:.04em}
+.type{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}
+.ctitle{font-family:var(--font-display);font-size:22px;line-height:1.1;text-transform:uppercase;padding:8px 20px 14px;margin:0;font-weight:400}
+.stage{background:var(--hp-gray-100);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:220px;overflow:auto}
+.spec{font-size:12px;color:var(--text-muted);font-variant-numeric:tabular-nums;text-align:center}
+.meta{padding:14px 20px 18px;display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.45}
+.meta b{font-weight:700}
+.flags{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+.flag{font-size:12px;line-height:1.4;background:#FFF4C2;padding:5px 8px;border-radius:3px}</style></head><body>
+<div class="wrap">
+<h1>Green Line — Sign Mockups v6</h1>
+<div class="top">
+<div class="panel"><p class="ph">Board standard</p><ul class="std">
+<li><b>Boards drawn by the design system.</b> Every board here is the standard <code>BoardSign</code> component, the same one the SVG print export uses.</li>
+<li><b>Fixed 4″ entry.</b> Each entry is one 4″ band. Board size follows the entry count: 24×6 (1), 24×12 (2), 24×16 (3), 24×20 (4), 24×24 (5).</li>
+<li><b>Header.</b> Solid black band to 3.5″: white brandmark 2.15″ tall with HAWK PRIDE OFFROAD at 1.35″ caps, centered as a pair. <b>One-entry boards have no header.</b></li>
+<li><b>Margins.</b> 1″ top and sides; 0.5″ under the last entry. Nothing is closer than 1″ to the edge.</li>
+<li><b>Names.</b> Barlow Semi Condensed Bold, mixed case, 1.5″ cap height, never shrunk. No “To” prefix.</li>
+<li><b>Each entry.</b> Numbered trail symbol · name · inline Green Line badge (if on route) · arrow in the right column. Rows run straight, then left, then right. 0.1″ gray rule between entries.</li>
+<li><b>Border.</b> 0.5″ black to the edge. Sign ID in the bottom border.</li>
+<li><b>Street signs.</b> 6″ tall, 24″ or 30″ wide by name length, Green Line plaque under Outfitter Trail.</li>
+</ul></div>
+<div class="panel"><p class="ph">Production schedule</p><table class="sched" id="sched"></table></div>
+</div>
+<div class="bar" id="bar"></div>
+<div class="grid" id="grid"></div>
+</div>
+<script type="text/babel">
+const NS = window.HawkPrideSignageDesignSystem_931354;
+const { StreetSign, DirectionArrow, DestinationIcon, LEVELS } = NS;
+const LOGO = '../assets/logo/brandmark-black.svg';
+const LOGO_ON_BLACK = '../assets/logo/brandmark-white.svg';
+const ROUTE = 'var(--route-green-line, #0B5D33)';
+const BLEED = 0.125;
+const u = 18, W = 24;
+const S = { arrows: 'right', face: 'anton', case: 'mixed', cap: '1.5', badge: 'beside', spill: 'use', to: 'drop', frame: 'slim' };
+const SIGNS = [ { "id": "01", "title": "Green Line Entrance", "kind": "street", "location": "Start of the Green Line, at the fork shown in the reference photograph.", "purpose": "Identify the beginning of the Green Line trail.", "photo": "IMG_3934.jpeg", "flags": [], "blades": [ { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line" } ] },
+  { "id": "02", "title": "Green Line Trail Entry", "kind": "board", "rows": [ { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "right" } ], "location": "Trail entrance at the junction shown in the photograph, near trail marker 79.", "purpose": "Visible to approaching riders, pointing right toward the Green Line entry.", "photo": "IMG_3935.jpeg", "flags": [] },
+  { "id": "03", "title": "Green Line / Whiskey Run Intersection", "kind": "street", "blades": [ { "name": "Whiskey Run", "number": 149, "level": "difficult" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line" } ], "location": "Intersection shown in the photograph.", "purpose": "Identify the intersection of Green Line and Whiskey Run (100), which is a RED trail.", "photo": "IMG_3936.jpeg", "flags": [ "Whiskey Run is now #149 (was 100) in the trail inventory." ] },
+  { "id": "04", "title": "Ridgeline / Lower Ridgeline / Green Line Intersection", "kind": "board", "rows": [ { "name": "Ridgeline", "number": 81, "level": "access", "direction": "left" }, { "name": "Lower Ridgeline", "number": 101, "level": "moderate", "direction": "right" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "straight" } ], "location": "Trail intersection shown in the photograph.", "purpose": "Direct riders left to Ridgeline (81), right to Lower Ridgeline (101), and straight ahead to Green Line.", "photo": "IMG_3937.jpeg", "flags": [ "Ridgeline (81) is an Access Road in the inventory: black arrow, no difficulty symbol." ] },
+  { "id": "05", "title": "Green Line Cut Through", "kind": "board", "rows": [ { "name": "Green Line Cut Through", "number": null, "level": "connector", "direction": "left" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "straight" } ], "location": "Junction between Green Line Cut Through and Green Line Main; exact placement to be confirmed.", "purpose": "Direct riders left to the cut-through or straight ahead along the main Green Line.", "photo": "IMG_3938.jpeg", "note": "Trail maintenance: the trail needs some work a little past this area.", "flags": [ "Green Line Cut Through is not in the trail inventory (no number or rating).", "\"Green Line Main\" shown as Outfitter Trail (100) with the Green Line badge." ] },
+  { "id": "06", "title": "Green Line / Vertical Limit Intersection", "kind": "board", "rows": [ { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "left" }, { "name": "Vertical Limit", "number": 103, "level": "difficult", "direction": "straight" }, { "name": "To Jake's Hill", "number": 102, "level": "difficult", "direction": "straight" }, { "name": "To Hopkins Revenge", "number": 142, "level": "difficult", "direction": "straight" } ], "location": "Trail intersection shown in the photograph, beside existing green left-arrow marker.", "purpose": "Direct riders left to Green Line and straight ahead to Vertical Limit and the listed connecting trails.", "photo": "IMG_3939.jpeg", "flags": [ "The \"To Vertical Limit, Jake's Hill, Hopkins Revenge\" line is split into one row per trail; Vertical Limit appears once." ] },
+  { "id": "07", "title": "Green Line / Fatty's Crack Directions", "kind": "board", "rows": [ { "name": "To Fatty's Crack", "number": 136, "level": "difficult", "direction": "right", "arrowLevel": "moderate" }, { "name": "To Fatty's Crack", "number": 136, "level": "difficult", "direction": "straight", "arrowLevel": "easy" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "left" } ], "location": "Trail junction shown in the photograph, near the existing green left-arrow marker.", "purpose": "Direct riders right toward Fatty's Crack via the blue route, straight ahead toward Fatty's Crack via the green route, and left along Green Line.", "photo": "IMG_3940.jpeg", "flags": [ "Fatty's Crack (136) is Difficult. Arrows show the blue and green routes to it. Which trails are those routes? The arrows should match the first trail's rating.", "Listed as street-style but has three arrows, so shown as a board." ] },
+  { "id": "08", "title": "Ed's Ledge / Green Line Intersection", "kind": "street", "blades": [ { "name": "Ed's Ledge", "number": 120, "level": "moderate" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line" } ], "location": "Trail intersection shown in the photograph, near existing trail arrow markers.", "purpose": "Identify the intersection of Ed's Ledge and Green Line.", "photo": "IMG_3941.jpeg", "flags": [ "Two trails are named Ed's Ledge (120 Moderate, 140 Difficult). Using 120 per Sign 23." ] },
+  { "id": "09", "title": "Ridgeline (81)", "kind": "street", "blades": [ { "name": "Ridgeline", "number": 81, "level": "access" } ], "location": "Junction shown in IMG_3942.jpeg.", "photo": "IMG_3942.jpeg", "flags": [ "Ridgeline (81) is an Access Road: brown blade." ] },
+  { "id": "10", "title": "Green Line Sharp Right Switchback", "kind": "board", "rows": [ { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "straight-then-right-then-down" } ], "location": "Same junction as Sign 09, shown in IMG_3942.jpeg.", "photo": "IMG_3942.jpeg", "flags": [ "Hairpin arrow drawn as straight, then right, then down. Inventory asks to confirm the artwork before production." ] },
+  { "id": "11", "title": "Green Line / Ridgeline (81) Intersection", "kind": "street", "blades": [ { "name": "Ridgeline", "number": 81, "level": "access" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line" } ], "location": "Junction shown in IMG_3943.jpeg.", "photo": "IMG_3943.jpeg", "flags": [ "Ridgeline (81) is an Access Road: brown blade." ] },
+  { "id": "12", "title": "To Cabins", "kind": "board", "rows": [ { "name": "To Cabins", "level": "destination", "destination": "cabins", "direction": "straight" } ], "location": "Same junction as Sign 11, shown in IMG_3943.jpeg.", "photo": "IMG_3943.jpeg" },
+  { "id": "13", "title": "Allen's Way / Green Line Directions", "kind": "board", "rows": [ { "name": "To Allen's Way", "number": 83, "level": "difficult", "direction": "straight" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "left" } ], "location": "Junction shown in the reference photograph.", "purpose": "Direct riders straight ahead toward Allen's Way or left to remain on Green Line.", "photo": "IMG_3944.jpeg", "flags": [] },
+  { "id": "14", "title": "Ed's Ledge Direction", "kind": "board", "rows": [ { "name": "Ed's Ledge", "number": 120, "level": "moderate", "direction": "right" } ], "location": "Trail turn shown in the reference photograph.", "purpose": "Direct riders right onto Ed's Ledge.", "photo": "IMG_3945.jpeg", "flags": [ "Two trails are named Ed's Ledge (120 Moderate, 140 Difficult). Using 120." ] },
+  { "id": "15", "title": "Ridgeline (81) / Green Line Intersection", "kind": "street", "blades": [ { "name": "Ridgeline", "number": 81, "level": "access" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line" } ], "location": "Trail junction shown in the reference photograph, near the existing green arrow marker on the tree.", "purpose": "Identify the intersection of Ridgeline (81) and Green Line.", "photo": "IMG_3946.jpeg", "flags": [ "Ridgeline (81) is an Access Road: brown blade." ] },
+  { "id": "16", "title": "Cabins / Green Line Directions", "kind": "board", "rows": [ { "name": "To Cabins", "number": null, "level": "destination", "direction": "left", "destination": "cabins" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "right" } ], "location": "Trail junction shown in the reference photograph.", "purpose": "Direct riders left toward the cabins and right along Green Line.", "photo": "IMG_3947.jpeg", "flags": [] },
+  { "id": "17", "title": "Allen's Way (83)", "kind": "street", "blades": [ { "name": "Allen's Way", "number": 83, "level": "difficult" } ], "location": "Junction shown in IMG_3949.jpeg.", "photo": "IMG_3949.jpeg", "flags": [] },
+  { "id": "18", "title": "Fatty's Crack / Green Line Directions", "kind": "board", "rows": [ { "name": "To Fatty's Crack", "number": 136, "level": "difficult", "direction": "right" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "left" } ], "location": "Same junction as Sign 17, shown in IMG_3949.jpeg.", "photo": "IMG_3949.jpeg", "flags": [] },
+  { "id": "20", "title": "Green Line / One Shot, Sunshine", "kind": "board", "rows": [ { "name": "One Shot", "number": 144, "level": "difficult", "direction": "right" }, { "name": "Sunshine", "number": 145, "level": "difficult", "direction": "right" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "left" } ], "location": "Junction shown in photograph.", "photo": "IMG_3954.jpeg", "flags": [ "Sign inventory said RED/PURPLE; the trail inventory rates both One Shot and Sunshine Difficult (red)." ] },
+  { "id": "21", "title": "Easy Peasy / Green Line Intersection", "kind": "street", "blades": [ { "name": "Easy Peasy", "number": 138, "level": "difficult" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line" } ], "location": "Junction shown in photograph.", "photo": "IMG_3955.jpeg", "flags": [] },
+  { "id": "22", "title": "To Fatty's Crack / Green Line", "kind": "board", "rows": [ { "name": "To Commandments", "number": 115, "level": "difficult", "direction": "right" }, { "name": "To Fatty's Crack", "number": 136, "level": "difficult", "direction": "right" }, { "name": "Outfitter Trail", "number": 100, "level": "easy", "route": "green-line", "direction": "left" } ], "location": "Junction shown in photograph.", "photo": "IMG_3956.jpeg", "flags": [ "Reference photo is UNCONFIRMED per the inventory." ] },
+  { "id": "23", "title": "Ed's Ledge (120)", "kind": "street", "blades": [ { "name": "Ed's Ledge", "number": 120, "level": "moderate" } ], "location": "Junction shown in photograph.", "photo": "IMG_3957.jpeg", "flags": [] } ];
+
+const RouteBadge = window.HawkPrideSignageDesignSystem_931354.RouteBadge || function ({ height = 32, style }) { return <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flex: 'none', height, padding: '0 ' + height * 0.32 + 'px', background: 'var(--route-green-line, #0B5D33)', color: '#fff', fontFamily: 'var(--font-sign)', fontSize: height * 0.62, lineHeight: 1, paddingTop: height * 0.04, textTransform: 'uppercase', letterSpacing: '0.03em', whiteSpace: 'nowrap', ...style }}>Green Line</div>; };
+let TrailSymbol;
+const ready = fetch('../components/symbols/TrailSymbol.jsx').then(r => r.text()).then(src => {
+  const code = src.replace(/^import .*$/gm, '').replace('export function TrailSymbol', 'function TrailSymbol') + '\nwindow.__HP_TS = TrailSymbol;';
+  new Function('React', 'LEVELS', Babel.transform(code, { presets: ['react'] }).code)(React, LEVELS); TrailSymbol = window.__HP_TS;
+});
+const FACES = { anton: { css: "'Anton', Impact, sans-serif", w: 400, capsOnly: true }, barlow: { css: "'Barlow Semi Condensed', sans-serif", w: 700 }, overpass: { css: "'Overpass', sans-serif", w: 700 }, atkinson: { css: "'Atkinson Hyperlegible Next', sans-serif", w: 700 } };
+
+const ctx = document.createElement('canvas').getContext('2d');
+const tw = (s, f) => { ctx.font = '100px Anton, Impact, sans-serif'; return (ctx.measureText(String(s).toUpperCase()).width / 100) * f * 1.01; };
+const capRatio = F => { ctx.font = `${F.w} 100px ${F.css}`; return ctx.measureText('H').actualBoundingBoxAscent / 100 || 0.72; };
+const fw = (s, fs, F) => { ctx.font = `${F.w} 100px ${F.css}`; return (ctx.measureText(String(s)).width / 100) * fs * 1.01; };
+const MV = { straight: 0, up: 0, back: 0, down: 0, right: 1, left: -1, 'bear-right': 0.7, 'bear-left': -0.7, 'back-right': 0.7, 'back-left': -0.7 };
+const netX = d => String(d).split('-then-').reduce((x, m, i, a) => x + (MV[m] || 0) * (a.length > 1 && i === 0 ? 1.4 : 1), 0);
+const side = d => (netX(d) > 0.05 ? 'R' : 'L');
+const orderKey = d => { const x = netX(d); return Math.abs(x) <= 0.05 ? 0 : x < 0 ? 1 : 2; };
+
+function geom(s) {
+  const C = +s.cap, F = FACES[s.face] || FACES.barlow, caps = F.capsOnly || s.case === 'caps';
+  const L = C / 0.86, nfs = C / capRatio(F);
+  const nw = n => fw(caps ? String(n).toUpperCase() : n, nfs, F);
+  const fr = { inset: 0, frame: 0.5, pad: 0.5 }; // full-bleed 0.5″ black border + 0.5″ clear = 1″ trim → content
+  const gap = L * 0.25, sym = L * 1.45, arrow = L * 1.5;
+  const content = W - 2 * (fr.inset + fr.frame + fr.pad);
+  const bH = s.badge === 'stacked' ? L * 1.25 : L * 0.85;
+  const badgeW = s.badge === 'under' ? 0 : (s.badge === 'stacked' ? fw('GREEN', bH * 0.42, F) : fw('GREEN LINE', bH * 0.62, F)) + bH * 0.5 + gap;
+  const area = (cols, badge) => content - sym - gap - cols * (arrow + gap) - (badge ? badgeW : 0);
+  return { L, C, F, caps, nfs, nw, fr, gap, sym, arrow, bH, area };
+}
+const label = (n, s) => (s.to === 'drop' ? String(n).replace(/^To /i, '') : n);
+
+function Badge({ s, g }) {
+  const base = { background: ROUTE, color: '#fff', fontFamily: g.F ? g.F.css : 'var(--font-sign)', fontWeight: g.F ? g.F.w : 400, textTransform: 'uppercase', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' };
+  if (s.badge === 'stacked') return <div style={{ ...base, height: g.bH * u, padding: `0 ${g.bH * 0.25 * u}px`, flexDirection: 'column', fontSize: g.bH * 0.42 * u, gap: g.bH * 0.06 * u, paddingTop: g.bH * 0.04 * u }}><span>Green</span><span>Line</span></div>;
+  return <div style={{ ...base, height: g.bH * u, padding: `${g.bH * 0.04 * u}px ${g.bH * 0.25 * u}px 0`, fontSize: g.bH * 0.62 * u, whiteSpace: 'nowrap' }}>Green Line</div>;
+}
+
+function Row({ r, s, g, cols, colL, colR }) {
+  const name = label(r.name, s), routeRow = !!r.route;
+  const sd = s.arrows === 'edges' ? side(r.direction) : s.arrows === 'left' ? 'L' : 'R';
+  const eff = s.spill === 'use' && colL && colR && sd === 'L' ? cols - 1 : cols;
+  const need = g.nw(name), area = g.area(eff, routeRow && s.badge !== 'under');
+  const fits = need <= area + 0.01;
+  const al = r.arrowLevel || r.level;
+  const arrow = <DirectionArrow direction={r.direction} level={LEVELS[al] ? al : undefined} color={LEVELS[r.level] ? undefined : r.level === 'destination' ? undefined : 'var(--hp-gray-400)'} size={g.arrow * u} strokeWidth={3.75} />;
+  const slot = (on) => <div style={{ width: g.arrow * u, flex: 'none', display: 'flex', justifyContent: 'center' }}>{on && arrow}</div>;
+  const mark = r.level === 'destination' ? <DestinationIcon destination={r.destination} size={g.sym * 0.9 * u} strokeWidth={3} /> : <TrailSymbol level={r.level === 'tbd' ? null : r.level} number={r.number ?? ''} size={(r.level === 'difficult' ? g.sym * 1.1 : g.sym) * u} />;
+  const nameEl = <div style={{ fontFamily: g.F.css, fontWeight: g.F.w, fontSize: g.nfs * u, lineHeight: 1, textTransform: g.caps ? 'uppercase' : 'none', whiteSpace: 'nowrap', paddingTop: g.C * 0.08 * u }}>{name}</div>;
+  return <div style={{ height: ROW_H * u, display: 'flex', alignItems: 'center', gap: g.gap * u, padding: `0 ${(g.fr.inset + g.fr.frame + g.fr.pad) * u}px`, outline: fits ? 'none' : '2px dashed var(--hp-red)', outlineOffset: -3, position: 'relative' }}>
+    {colL && slot(sd === 'L')}
+    <div style={{ width: g.sym * u, flex: 'none', display: 'flex', justifyContent: 'center' }}>{mark}</div>
+    {routeRow && s.badge === 'under'
+      ? <div style={{ display: 'flex', flexDirection: 'column', gap: 0.2 * u, alignItems: 'flex-start' }}>{nameEl}<Badge s={{ badge: 'beside' }} g={{ ...g, bH: g.C * 0.95 }} /></div>
+      : <>{nameEl}{routeRow && <Badge s={s} g={g} />}</>}
+    <div style={{ flex: 1 }}></div>
+    {colR && (eff < cols ? null : slot(sd === 'R'))}
+    {!fits && <div style={{ position: 'absolute', right: 6, top: 4, fontSize: 10, fontWeight: 700, color: 'var(--hp-red)', background: '#fff', padding: '0 3px' }}>+{(need - area).toFixed(1)}″</div>}
+  </div>;
+}
+
+const RULES = NS.BOARD_RULES;
+const boardRows = sample => sample.rows.map(r => ({ ...r, level: r.level === 'tbd' ? null : r.level }));
+function Board({ sample, guides }) {
+  useFontsTick();
+  return <div className="bwrap"><NS.BoardSign rows={boardRows(sample)} signId={'GL-' + sample.id} ppi={u} showGuides={guides} style={{ boxShadow: '0 1px 2px rgba(0,0,0,.18)' }} /></div>;
+}
+
+function useFontsTick() {
+  const [t, setT] = React.useState(0);
+  React.useEffect(() => { let live = true; Promise.all([document.fonts.load('40px Anton'), document.fonts.load('700 40px "Barlow Semi Condensed"')]).then(() => document.fonts.ready).then(() => live && setTimeout(() => live && setT(x => x + 1), 0)); return () => { live = false; }; }, []);
+  return t;
+}
+
+
+function streetWidth(b) {
+  const ctx = document.createElement('canvas').getContext('2d'); ctx.font = '100px Anton, Impact, sans-serif';
+  const tw = (str, f, tr = 0) => (ctx.measureText(str).width / 100) * f + str.length * tr * f;
+  const H = 6, pad = 0.25 + 0.375 + H * 0.07, gap = H * 0.1;
+  const numW = b.number != null ? Math.max(H * 0.56, tw(String(b.number), H * 0.42) + H * 0.12) + gap : 0;
+  const need = tw(String(b.name).toUpperCase(), H * 0.6, 0.01);
+  return 24 - 2 * pad - numW >= need ? 24 : 30;
+}
+function Blade({ b }) {
+  if (b.level === 'tbd') return <div style={{ filter: 'grayscale(1) brightness(1.15)' }}><StreetSign name={b.name} number={b.number} level="easy" showSymbol={false} width={streetWidth(b)} height={6} ppi={12} /></div>;
+  return <StreetSign name={b.name} number={b.number} level={b.level} showSymbol={false} width={streetWidth(b)} height={6} ppi={12} />;
+}
+function StreetStack({ blades }) {
+  const route = blades.some(b => b.route);
+  useFontsTick();
+  return <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 * 12 }}>{blades.map((b, i) => <Blade key={i} b={b} />)}{route && <RouteBadge height={3 * 12} />}</div>
+    <div style={{ width: 2 * 12, height: 6 * 12, background: 'var(--hp-gray-400)' }}></div>
+  </div>;
+}
+
+
+const boardSize = n => RULES.boardHeight(n) || 24;
+function overflow(s) {
+  if (!s.rows) return [];
+  return s.rows.filter(r => !RULES.checkRow({ ...r, level: r.level === 'tbd' ? null : r.level }).fits).map(r => RULES.boardLabel(r.name, r.number));
+}
+function Card({ s, guides }) {
+  const items = s.rows || s.blades || [];
+  const tbd = items.some(x => x.level === 'tbd');
+  const flags = [...(s.flags || [])].filter(f => !/Listed as a small board|shown at standard board size/.test(f));
+  if (tbd && !flags.some(f => /not in the trail inventory|difficulty not given/i.test(f))) flags.unshift('Difficulty not given; shown in gray.');
+  const over = overflow(s);
+  over.forEach(n => flags.unshift(`“${n}” is too long for a 24″ board at standard letter size. Needs a short sign name.`));
+  if (s.rows && s.rows.length === 1) flags.push('One-entry board (24×6, no header). A trail marker or route marker may do the same job for less.');
+  const spec = s.kind === 'street' ? `Vendor blade · ${s.blades.map(b => streetWidth(b) + '″ × 6″').join(' + ')}${s.blades.some(b => b.route) ? ' + Green Line plaque (3″)' : ''}` : `Dibond 1/8″ · 24″ × ${boardSize(s.rows.length)}″ · ${s.rows.length} entr${s.rows.length > 1 ? 'ies' : 'y'}`;
+  return <article className="card" id={'sign-' + s.id} data-screen-label={'Sign ' + s.id}>
+    <div className="chead"><span className="num">SIGN {s.id}</span><span className="sid">GL-{s.id}</span><span className="type">{s.kind === 'street' ? 'Type 1 · Street sign' : 'Type 2 · Board sign'}</span></div>
+    <h2 className="ctitle">{s.title}</h2>
+    <div className="stage">{s.kind === 'street' ? <StreetStack blades={s.blades} /> : <Board sample={s} guides={guides} />}<div className="spec">{spec}</div></div>
+    <div className="meta">
+      <div><b>Location:</b> {s.location}</div>
+      {s.purpose && <div><b>Purpose:</b> {s.purpose}</div>}
+      {s.note && <div><b>Note:</b> {s.note}</div>}
+      <div style={{ color: 'var(--text-muted)' }}><b>Photo:</b> {s.photo} · <b>Status:</b> {tbd || over.length ? 'Needed · not ready to print' : 'Needed · ready for proof'} · <b>GPS:</b> not recorded</div>
+      {flags.length > 0 && <div className="flags">{flags.map((f, i) => <div key={i} className="flag">Check: {f}</div>)}</div>}
+    </div>
+  </article>;
+}
+function Schedule() {
+  useFontsTick();
+  const boards = SIGNS.filter(s => s.kind === 'board');
+  const by = {}; boards.forEach(s => { const k = boardSize(s.rows.length); by[k] = (by[k] || 0) + 1; });
+  const blades = SIGNS.filter(s => s.kind === 'street').flatMap(s => s.blades.map(streetWidth));
+  const plaques = SIGNS.filter(s => s.kind === 'street' && s.blades.some(b => b.route)).length;
+  const hold = SIGNS.filter(s => (s.rows || s.blades || []).some(x => x.level === 'tbd') || overflow(s).length).length;
+  return <tbody>
+    {NS.BOARD_SIZES.map(b => b.height).map(h => <tr key={h}><td>24″ × {h}″ Dibond board</td><td>{by[h] || 0}</td></tr>)}
+    <tr><td>24″ × 6″ street blade (vendor)</td><td>{blades.filter(w => w === 24).length}</td></tr>
+    <tr><td>30″ × 6″ street blade (vendor)</td><td>{blades.filter(w => w === 30).length}</td></tr>
+    <tr><td>Green Line badge plaque</td><td>{plaques}</td></tr>
+    <tr><td>Signs on hold</td><td>{hold}</td></tr>
+  </tbody>;
+}
+function App() {
+  const [guides, setGuides] = React.useState(false);
+  useFontsTick();
+  return <>
+    {ReactDOM.createPortal(<Schedule />, document.getElementById('sched'))}
+    {ReactDOM.createPortal(<>
+      {['easy', 'moderate', 'difficult', 'extreme'].map(l => <div key={l} className="li"><TrailSymbol level={l} number="7" size={l === 'extreme' ? 16 : 22} />{LEVELS[l].label}</div>)}
+      <div className="li"><RouteBadge height={20} />Route badge</div>
+      <div className="li"><TrailSymbol level={null} number="?" size={22} />Rating not given</div>
+      <label className="tog"><input type="checkbox" checked={guides} onChange={e => setGuides(e.target.checked)} />Print guides</label>
+    </>, document.getElementById('bar'))}
+    {SIGNS.map(s => <Card key={s.id} s={s} guides={guides} />)}
+  </>;
+}
+ready.then(() => Promise.all([document.fonts.load('100px Anton'), document.fonts.load('700 100px "Barlow Semi Condensed"')])).then(() => ReactDOM.createRoot(document.getElementById('grid')).render(<App />));
+</script></body></html>

@@ -1,0 +1,109 @@
+<!-- @dsCard group="Sign Kit" viewport="1280x800" name="Sign kit" subtitle="Interactive composer for all three sign types" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Hawk Pride Sign Kit</title><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:var(--font-body);color:var(--text-body);background:var(--surface-muted)}a{color:var(--text-body)}a:hover{color:var(--text-muted)}
+input,select{font:inherit;font-size:13px;padding:6px 8px;border:1px solid var(--border-default);border-radius:var(--radius-sm);background:#fff;min-width:0}
+button{font:inherit;cursor:pointer}</style></head><body><div id="sign-kit-root"></div>
+<script type="text/babel">
+const kitStyles = {
+  label: { fontSize: 11, fontWeight: 700, letterSpacing: '.04em', textTransform: 'uppercase', color: 'var(--text-muted)' },
+  field: { display: 'flex', flexDirection: 'column', gap: 4 },
+};
+const LEVEL_OPTS = ['easy', 'moderate', 'difficult', 'extreme', 'access'];
+const DIR_OPTS = ['', 'straight', 'bear-right', 'right', 'back-right', 'back', 'back-left', 'left', 'bear-left', ...(window.HawkPrideSignageDesignSystem_931354.ARROW_PRESETS || [])];
+
+function Field({ label, children, style }) {
+  return <label style={{ ...kitStyles.field, ...style }}><span style={kitStyles.label}>{label}</span>{children}</label>;
+}
+function Select({ value, onChange, options }) {
+  return <select style={{ width: '100%' }} value={value} onChange={e => onChange(e.target.value)}>{options.map(o => <option key={o} value={o}>{o || '—'}</option>)}</select>;
+}
+function Tabs({ value, onChange, items }) {
+  return <div style={{ display: 'flex', gap: 0, borderBottom: '2px solid var(--hp-black)', overflowX: 'auto' }}>
+    {items.map(([k, l]) => <button key={k} onClick={() => onChange(k)} style={{ border: 'none', padding: '10px 18px', whiteSpace: 'nowrap', flex: 'none', fontFamily: 'var(--font-display)', fontSize: 18, textTransform: 'uppercase', background: value === k ? 'var(--hp-black)' : 'transparent', color: value === k ? 'var(--hp-yellow)' : 'var(--hp-black)' }}>{l}</button>)}
+  </div>;
+}
+Object.assign(window, { kitStyles, LEVEL_OPTS, DIR_OPTS, Field, Select, Tabs });
+</script>
+<script type="text/babel">
+const { StreetSign, BoardSign, TrailMarker, DifficultyLegend, LEVELS, DESTINATION_ICONS } = window.HawkPrideSignageDesignSystem_931354;
+
+function StreetPanel() {
+  const [s, set] = React.useState({ name: 'Thompson Trail', number: '71', level: 'moderate', width: 'auto', height: 6, showSymbol: false });
+  const u = k => v => set(p => ({ ...p, [k]: v }));
+  return <Layout controls={<>
+    <Field label="Trail name"><input value={s.name} onChange={e => u('name')(e.target.value)} /></Field>
+    <Field label="Trail number"><input value={s.number} onChange={e => u('number')(e.target.value)} /></Field>
+    <Field label="Level"><Select value={s.level} onChange={u('level')} options={LEVEL_OPTS} /></Field>
+    <Field label="Width (in)"><Select value={String(s.width)} onChange={v => u('width')(v === 'auto' ? 'auto' : +v)} options={['auto', '24', '30']} /></Field>
+    
+    <Field label="Symbol"><Select value={s.showSymbol ? 'show' : 'hide'} onChange={v => u('showSymbol')(v === 'show')} options={['show', 'hide']} /></Field>
+  </>} preview={<StreetSign {...s} ppi={14} />} note="Primary navigation routes only. Placed at route beginnings and at intersections of primary routes." />;
+}
+
+function BoardPanel() {
+  const [signId, setSignId] = React.useState('GL-04');
+  const [rows, setRows] = React.useState([
+    { name: 'Outfitter Trail', number: '100', level: 'easy', route: 'yes', direction: 'straight' },
+    { name: 'Ridgeline', number: '81', level: 'access', direction: 'left' },
+    { name: 'Lower Ridgeline', number: '101', level: 'moderate', direction: 'right' },
+    { name: 'Cabins', level: 'destination', destination: 'cabins', direction: 'right' },
+  ]);
+  const upd = (i, k, v) => setRows(r => r.map((x, j) => j === i ? { ...x, [k]: v } : x));
+  const ctl = <>
+    <Field label="Sign ID"><input value={signId} onChange={e => setSignId(e.target.value)} /></Field>
+    {rows.map((r, i) => <div key={i} style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr) 20px', gap: 6, alignItems: 'end', paddingTop: 8, borderTop: '1px solid var(--border-default)' }}>
+      <Field label={'Row ' + (i + 1)} style={{ gridColumn: '1 / 3', minWidth: 0 }}><input value={r.name} onChange={e => upd(i, 'name', e.target.value)} /></Field>
+      {r.level === 'destination'
+        ? <Field label="Icon" style={{ minWidth: 0, gridColumn: '1 / 4' }}><Select value={r.destination} onChange={v => upd(i, 'destination', v)} options={Object.keys(DESTINATION_ICONS)} /></Field>
+        : <Field label="#" style={{ minWidth: 0, gridColumn: '1 / 4' }}><input value={r.number || ''} onChange={e => upd(i, 'number', e.target.value)} /></Field>}
+      <Field label="Level" style={{ minWidth: 0 }}><Select value={r.level} onChange={v => upd(i, 'level', v)} options={[...LEVEL_OPTS, 'destination']} /></Field>
+      <Field label="Arrow" style={{ minWidth: 0 }}><Select value={r.direction} onChange={v => upd(i, 'direction', v)} options={DIR_OPTS.slice(1)} /></Field>
+      {r.level !== 'destination' && <Field label="Green Line" style={{ minWidth: 0, gridColumn: '1 / 3' }}><Select value={r.route || 'no'} onChange={v => upd(i, 'route', v)} options={['no', 'yes']} /></Field>}
+      <button onClick={() => setRows(rs => rs.filter((_, j) => j !== i))} title="Remove row" style={{ border: 'none', background: 'none', fontSize: 18, padding: 0, height: 30, gridColumn: 3, gridRow: 1 }}>×</button>
+    </div>)}
+    <button disabled={rows.length >= 5} onClick={() => setRows(r => r.length >= 5 ? r : [...r, { name: 'New Trail', number: '0', level: 'easy', direction: 'right' }])} style={{ padding: '8px 12px', border: '2px solid var(--hp-black)', background: 'var(--hp-yellow)', fontWeight: 700 }}>Add row</button>
+  </>;
+  return <Layout controls={ctl} preview={<BoardSign signId={signId} rows={rows.map(r => ({ ...r, route: r.route === 'yes' ? 'green-line' : undefined }))} ppi={16} showChecks />} note="Board standard: 24″ wide; every entry a fixed 4″ band, so the board is 6/12/16/20/24″ tall for 1–5 entries (1 entry: no header). Entries sort straight → left → right; names never shrink." />;
+}
+
+function MarkerPanel() {
+  const [m, set] = React.useState({ number: '71', level: 'moderate', direction: 'bear-left', route: 'green-line' });
+  const u = k => v => set(p => ({ ...p, [k]: v }));
+  return <Layout controls={<>
+    <Field label="Trail number"><input value={m.number} onChange={e => u('number')(e.target.value)} /></Field>
+    <Field label="Level"><Select value={m.level} onChange={u('level')} options={LEVEL_OPTS.slice(0, 4)} /></Field>
+    <Field label="Arrow"><Select value={m.direction || ''} onChange={u('direction')} options={DIR_OPTS} /></Field>
+  </>} preview={<div style={{ display: 'flex', gap: 48, alignItems: 'flex-end' }}><TrailMarker {...m} direction={m.direction || undefined} ppi={20} /><TrailMarker {...m} direction={m.direction || undefined} ppi={20} showPost={false} style={{ background: 'var(--hp-gray-200)', borderRadius: 8 }} /></div>} note="Trail entrances, confusing intersections, just after major junctions. Right: decal sheet only." />;
+}
+
+function Layout({ controls, preview, note }) {
+  return <div style={{ display: 'grid', gridTemplateColumns: 'minmax(280px,380px) minmax(0,1fr)', gap: 24, padding: 24, alignItems: 'start' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, background: '#fff', padding: 20, border: '1px solid var(--border-default)' }}>{controls}
+      <p style={{ margin: '8px 0 0', fontSize: 13, lineHeight: 1.45, color: 'var(--text-muted)' }}>{note}</p></div>
+    <div style={{ background: '#fff', border: '1px solid var(--border-default)', padding: 32, minHeight: 480, display: 'flex', alignItems: 'center', justifyContent: 'safe center', overflow: 'auto' }}><div style={{ margin: 'auto' }}>{preview}</div></div>
+  </div>;
+}
+
+function App() {
+  const [tab, setTab] = React.useState(localStorage.getItem('hp-kit-tab') || 'board');
+  const go = t => { setTab(t); localStorage.setItem('hp-kit-tab', t); };
+  return <div>
+    <header style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '14px 24px', background: 'var(--hp-black)' }}>
+      <img src="../../assets/logo/hawk-pride-offroad-logo.png" alt="Hawk Pride Offroad" style={{ height: 44 }} />
+      <div style={{ fontFamily: 'var(--font-display)', fontSize: 24, color: 'var(--hp-white)', textTransform: 'uppercase' }}>Trail Signage Kit</div>
+    </header>
+    <div style={{ padding: '0 24px', background: '#fff' }}><Tabs value={tab} onChange={go} items={[['street', 'Type 1 · Street sign'], ['board', 'Type 2 · Board sign'], ['marker', 'Type 3 · Trail marker'], ['legend', 'Legend']]} /></div>
+    {tab === 'street' && <StreetPanel />}
+    {tab === 'board' && <BoardPanel />}
+    {tab === 'marker' && <MarkerPanel />}
+    {tab === 'legend' && <div style={{ padding: 24 }}><div style={{ background: '#fff', border: '1px solid var(--border-default)', padding: 32 }}><DifficultyLegend variant="table" showDetails size={44} /></div></div>}
+  </div>;
+}
+const kitRoot = document.getElementById('sign-kit-root');
+if (kitRoot && !window.__HP_KIT_MOUNTED) { window.__HP_KIT_MOUNTED = true; ReactDOM.createRoot(kitRoot).render(<App />); }
+</script>
+</body></html>

@@ -1,0 +1,39 @@
+/* Physical sign geometry, in INCHES (unitless). Components multiply by a ppi (pixels-per-inch) prop.
+   Preview at ppi 8–24; print files at 150+. Mirrors SIZES / BOARD_SIZES in components/symbols/signSpec.js.
+   Full rules: NEW_SIGN_INSTRUCTIONS.md. */
+:root{
+/* Type 1 — Street sign blade (reflective metal, vendor) */
+--street-height-in:6; /* @kind other */
+--street-width-in:24; /* @kind other */
+--street-width-long-in:30; /* @kind other */
+--street-border-in:0.375; /* @kind other */
+--street-border-inset-in:0.25; /* @kind other */
+--street-corner-in:0.75; /* @kind other */
+--street-route-plaque-in:3; /* @kind other */
+/* Type 2 — Board sign (printed PVC). Fixed 4in entry; sizes 24x6 (1 entry, no header), 24x12 (2), 24x16 (3), 24x20 (4), 24x24 (5). */
+--board-width-in:24; /* @kind other */
+--board-h-single-in:6; /* @kind other */
+--board-h-small-in:12; /* @kind other */
+--board-h-medium-in:16; /* @kind other */
+--board-h-large-in:20; /* @kind other */
+--board-h-xlarge-in:24; /* @kind other */
+--board-border-in:0.5; /* @kind other */
+--board-bleed-in:0.125; /* @kind other */
+--board-margin-in:1; /* @kind other */
+--board-header-height-in:2.5; /* @kind other */
+--board-header-gap-in:0; /* @kind other */
+--board-brandmark-height-in:2.15; /* @kind other */
+--board-wordmark-cap-in:1.35; /* @kind other */
+--board-brandmark-top-in:1.1; /* @kind other */
+--board-wordmark-cap-top-in:1.65; /* @kind other */
+--board-brand-gap-in:0.55; /* @kind other */
+--board-name-cap-in:1.5; /* @kind other */
+--board-entry-height-in:4; /* @kind other */
+--board-bottom-margin-in:0.5; /* @kind other */
+--board-rule-in:0.1; /* @kind other */
+--board-corner-in:0.5; /* @kind other */
+/* Type 3 — Trail marker post + decals */
+--marker-post-width-in:4; /* @kind other */
+--marker-decal-in:3.5; /* @kind other */
+--marker-decal-gap-in:0.5; /* @kind other */
+}

@@ -1,0 +1,29 @@
+/* Display: Impact in the Playbook. Anton is the shipped web/print substitute (closest open match). */
+:root{
+--font-display:"Anton","Impact","Haettenschweiler","Arial Narrow Bold",sans-serif;
+--font-body:"DM Sans",system-ui,sans-serif;
+--font-sign:var(--font-display);
+--font-sign-name:"Barlow Semi Condensed","Arial Narrow",sans-serif; /* board sign entry names: Bold 700, mixed case */
+--weight-sign-name:700;
+
+--weight-regular:400;
+--weight-bold:700;
+--weight-black:900;
+
+/* Document scale (px) */
+--text-display:48px;
+--text-h1:32px;
+--text-h2:22px;
+--text-h3:16px;
+--text-body-size:15px;
+--text-small:12px;
+--leading-tight:1.05;
+--leading-body:1.45;
+--tracking-sign:0.01em;
+--tracking-caps:0.02em;
+
+/* Sign lettering. Boards: fixed 1.5in cap height (--board-name-cap-in), never shrunk.
+   Street blades: name font-size = 0.60 x blade height. Anton cap height = 0.86 em. */
+--sign-street-name-ratio:0.6; /* @kind other */
+--sign-cap-per-em:0.86; /* @kind other */
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Sign Typeface Study</title><link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@700;800&amp;family=Barlow+Semi+Condensed:wght@600;700&amp;family=Atkinson+Hyperlegible+Next:wght@700;800&amp;display=swap" rel="stylesheet">
+<script src="../_ds_bundle.js"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:var(--font-body);color:var(--text-body);background:var(--surface-muted)}a{color:var(--text-body)}a:hover{color:var(--text-muted)}
+.wrap{max-width:1240px;margin:0 auto;padding:40px 32px 80px;display:flex;flex-direction:column;gap:22px}
+h1{font-family:var(--font-display);font-weight:400;font-size:42px;line-height:1;text-transform:uppercase;margin:0}
+h2{font-family:var(--font-display);font-weight:400;font-size:22px;line-height:1.1;text-transform:uppercase;margin:0 0 10px}
+p,li{font-size:15px;line-height:1.55;text-wrap:pretty}p{margin:0 0 8px}ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.lede{color:var(--text-muted);max-width:820px;margin-top:10px}
+.panel{background:#fff;border:1px solid var(--border-default);padding:20px 24px}
+.seg{display:flex;border:2px solid var(--hp-black);width:max-content}.seg button{font:inherit;font-size:13px;font-weight:700;border:none;padding:6px 12px;background:#fff;cursor:pointer;white-space:nowrap}.seg button.on{background:var(--hp-black);color:var(--hp-yellow)}
+.bar{display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:13px}
+.font{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;align-items:start;padding:18px 0;border-top:1px solid var(--border-default)}
+.font:first-child{border-top:none;padding-top:0}
+.fname{font-weight:700;font-size:16px}.fmeta{font-size:12px;color:var(--text-muted);line-height:1.45;margin-top:4px}
+.big{font-family:var(--font-display);font-size:30px;line-height:1;margin-top:8px}
+.rows{display:flex;flex-direction:column;gap:8px;min-width:0}
+.row{display:flex;align-items:center;gap:12px;height:56px;padding:0 12px;border:2px solid var(--hp-black);border-radius:4px;background:#fff;width:100%;max-width:672px;overflow:hidden;position:relative}
+.row .nm{white-space:nowrap;line-height:1;color:var(--hp-black)}
+.row .lim{position:absolute;top:0;bottom:0;border-left:2px dashed var(--hp-red)}
+.blur .nm{filter:blur(2.2px)}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:8px 10px;border-bottom:2px solid var(--hp-black)}
+td{padding:8px 10px;border-bottom:1px solid var(--border-default)}
+tr.best td{background:#FFF4C2}</style></head><body>
+<div class="wrap">
+<div><h1>Sign Typeface Study</h1>
+<p class="lede">Anton, the current face, is very condensed, all caps and has tight counters. That packs in long names, but research on road and wayfinding signs favors open letterforms in mixed case. Here every candidate is set at the same 1.72″ cap height used in the Fit Lab, measured against a 15.4″ name space on a 24″ board.</p></div>
+
+<div class="panel"><h2>What the research says</h2><ul>
+<li>Mixed case reads better for names. “Mixed-case characters result in greater legibility distances than uppercase-only,” and one rule of thumb is that “letter height needs to increase by 15% when all-uppercase letters are used.”</li>
+<li>Recognition beats letter-by-letter reading. When mixed-case and all-caps words take the same sign area, mixed case reads the same distance and wins on recognition.</li>
+<li>US highway practice agrees: mixed case is “restricted to place names and destinations”, while short action words stay in caps.</li>
+<li>Very condensed caps on reflective or bright faces can “halo or overglow as a bright shape with inconsistent definition.” Open counters resist that.</li>
+<li>Trail names are destinations, so they should use mixed case. Numbers stay in the symbols, and badges like GREEN LINE can stay in caps.</li>
+</ul></div>
+
+<div class="panel"><div class="bar"><span style="font-weight:700">Show names in</span><div class="seg" id="case"></div><span style="font-weight:700">Cap height</span><div class="seg" id="cap"></div><span style="font-weight:700">Simulate distance</span><div class="seg" id="blur"></div><span class="hint" style="color:var(--text-muted)">Red dashed line = end of the 15.4″ name space</span></div></div>
+
+<div class="panel" id="fonts"></div>
+
+<div class="panel"><h2>Fit against all inventory names</h2><table id="tbl"></table>
+<p style="font-size:13px;color:var(--text-muted);margin-top:10px">Same cap height for every face. Mixed case at 1.5″ reads about as far as all caps at 1.72″, using the 15% all-caps penalty cited above. Lowercase height (x-height) is what drives mixed-case legibility, so a larger x-height reads bigger at the same cap height.</p></div>
+
+<div class="panel"><h2>Recommendation</h2>
+<ul>
+<li><b>Names: Barlow Semi Condensed Bold, mixed case, 1.5″ cap height.</b> At equal cap height, mixed case reads about as far as Anton caps at 1.72″, and the open letters hold up better on bright faces. At 1.5″ it fits 130 of 144 inventory names, about the same as Anton today (131), and Outfitter Trail fits with 3.7″ to spare. Free on Google Fonts.</li>
+<li><b>Overpass Bold</b> is the closest free match to Highway Gothic, the US road-sign face, and the most familiar. It's wider: at 1.5″ it fits 113 of 144 names, so about 30 trails would need a short sign name on a 24″ board.</li>
+<li><b>Atkinson Hyperlegible Next</b> is the most legible letter by letter, but the widest. Better suited to the legend, maps and the website than to a fixed 24″ board.</li>
+<li><b>Keep Anton for brand only:</b> titles, documents and the brandmark area, not names riders read at distance.</li>
+<li><b>Numbers inside trail symbols:</b> same face as the names, so 1 and 7 read clearly inside a red diamond.</li>
+<li><b>Street signs:</b> same face and case for a consistent system. The vendor may substitute Highway Gothic (FHWA Series D) if they can't use a custom font; that's an acceptable fallback.</li>
+</ul></div>
+</div>
+<script>
+const NS = window.HawkPrideSignageDesignSystem_931354 || {};
+const NAMES = [...new Set((NS.TRAIL_INVENTORY || []).map(t => t.name).filter(Boolean))];
+const SAMPLES = ['Outfitter Trail', 'Lower Ridgeline', 'Hopkins Revenge', 'Brokefoot Upper', "Gobbler's Ridge"];
+const FONTS = [
+  { id: 'anton', name: 'Anton', css: "'Anton'", w: 400, meta: 'Current face. Ultra-condensed display, tight counters.' },
+  { id: 'overpass', name: 'Overpass Bold', css: "'Overpass'", w: 700, meta: 'Open-source Highway Gothic interpretation. Wide, open, large x-height.' },
+  { id: 'barlow', name: 'Barlow Semi Condensed Bold', css: "'Barlow Semi Condensed'", w: 700, meta: 'Inspired by California road signs and plates. Semi-condensed.' },
+  { id: 'atkinson', name: 'Atkinson Hyperlegible Next Bold', css: "'Atkinson Hyperlegible Next'", w: 700, meta: 'Braille Institute face built to separate look-alike letters. Wide.' },
+];
+let CAP = 1.72; const AREA = 15.4, PX = 28;
+const ctx = document.createElement('canvas').getContext('2d');
+const metrics = f => { ctx.font = `${f.w} 100px ${f.css}`; const H = ctx.measureText('H').actualBoundingBoxAscent / 100, x = ctx.measureText('x').actualBoundingBoxAscent / 100; return { cap: H, x }; };
+const width = (f, s, fs) => { ctx.font = `${f.w} 100px ${f.css}`; return ctx.measureText(s).width / 100 * fs; };
+let state = { mixed: true, blur: false, cap: 1.72 };
+function render() {
+  CAP = state.cap;
+  const rows = FONTS.map(f => {
+    const m = metrics(f), fs = CAP / m.cap;
+    const txt = s => (state.mixed && f.id !== 'anton' ? s : s.toUpperCase());
+    const fits = NAMES.filter(n => width(f, txt(n), fs) <= AREA).length;
+    return { f, m, fs, txt, fits };
+  });
+  document.getElementById('fonts').innerHTML = rows.map(({ f, m, fs, txt, fits }) => `<div class="font"><div><div class="fname">${f.name}</div><div class="fmeta">${f.meta}<br>${f.id === 'anton' ? 'Caps only' : 'x-height ' + (m.x / m.cap * 100).toFixed(0) + '% of caps'}</div><div class="big">${fits} / ${NAMES.length}</div><div class="fmeta">names fit</div></div><div class="rows ${state.blur ? 'blur' : ''}">${SAMPLES.map(s => `<div class="row"><span class="nm" style="font-family:${f.css};font-weight:${f.w};font-size:${fs * PX}px;padding-top:${f.id === 'overpass' ? fs * PX * 0.12 : 0}px">${txt(s)}</span><span class="lim" style="left:${12 + AREA * PX}px"></span></div>`).join('')}</div></div>`).join('');
+  const best = Math.max(...rows.filter(r => r.f.id !== 'anton').map(r => r.fits));
+  document.getElementById('tbl').innerHTML = `<thead><tr><th>Face</th><th>Case</th><th>x-height</th><th>“Outfitter Trail” width</th><th>Names that fit 15.4″</th></tr></thead><tbody>` + rows.map(({ f, m, fs, txt, fits }) => `<tr${f.id !== 'anton' && fits === best ? ' class="best"' : ''}><td>${f.name}</td><td>${f.id === 'anton' || !state.mixed ? 'All caps' : 'Mixed'}</td><td>${f.id === 'anton' ? '—' : (m.x / m.cap * 100).toFixed(0) + '%'}</td><td>${width(f, txt('Outfitter Trail'), fs).toFixed(1)}″</td><td>${fits} / ${NAMES.length}</td></tr>`).join('') + '</tbody>';
+}
+const seg = (id, opts, key) => { const el = document.getElementById(id); const draw = () => { el.innerHTML = ''; opts.forEach(([v, l]) => { const b = document.createElement('button'); b.textContent = l; if (state[key] === v) b.className = 'on'; b.onclick = () => { state[key] = v; draw(); render(); }; el.appendChild(b); }); }; draw(); };
+seg('case', [[true, 'Mixed case'], [false, 'All caps']], 'mixed');
+seg('cap', [[1.72, '1.72″ (current)'], [1.5, '1.5″ mixed case']], 'cap');
+seg('blur', [[false, 'Sharp'], [true, '~70 ft']], 'blur');
+Promise.all(FONTS.map(f => document.fonts.load(`${f.w} 100px ${f.css}`))).then(() => document.fonts.ready).then(render);
+</script></body></html>

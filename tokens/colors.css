@@ -1,0 +1,54 @@
+/* Hawk Pride signage colors. Screen (sRGB) values sampled from the Playbook legend.
+   Print specs (CMYK / Pantone / reflective sheeting codes) are TBD — add after first printer proof. */
+:root{
+/* Brand */
+--hp-yellow:#FFC900;
+--hp-black:#0E0E0E;
+--hp-white:#FFFFFF;
+/* Difficulty base hues */
+--hp-green:#24883F;
+--hp-blue:#1F6FC5;
+--hp-red:#C92A38;
+--hp-purple:#7A3AAD;
+/* Access / wayfinding */
+--hp-brown:#6B4426;
+--hp-gray:#6E6E6E;
+/* Neutrals (documents, previews — not sign faces) */
+--hp-gray-100:#F4F4F2;
+--hp-gray-200:#E4E4E0;
+--hp-gray-400:#A6A6A0;
+--hp-gray-700:#3D3D3A;
+--hp-post-wood:#6A3A1E;
+
+/* Semantic — difficulty (the one association riders learn) */
+--difficulty-easy:var(--hp-green);
+--difficulty-moderate:var(--hp-blue);
+--difficulty-difficult:var(--hp-red);
+--difficulty-extreme:var(--hp-purple);
+/* Semantic — non-rated */
+--wayfinding-destination:var(--hp-black);
+--access-road-sign:var(--hp-brown);
+--access-road-arrow:var(--hp-black);
+--access-road-line:var(--hp-gray);
+
+/* Navigation routes — route badges (Playbook Part 5). Deeper than --difficulty-easy so the
+   rectangular badge never reads as an Easy rating or an Easy street blade. */
+--hp-route-green:#0B5D33;
+--route-green-line:var(--hp-route-green);
+
+/* Semantic — sign faces */
+--sign-ink:var(--hp-black);
+--sign-ink-inverse:var(--hp-white);
+--sign-face:var(--hp-white);
+--sign-frame:var(--hp-black);
+--sign-accent:var(--hp-yellow);
+
+/* Semantic — documents / UI */
+--surface-page:var(--hp-white);
+--surface-muted:var(--hp-gray-100);
+--border-default:var(--hp-gray-200);
+--text-body:var(--hp-black);
+--text-muted:var(--hp-gray-700);
+--text-on-accent:var(--hp-black);
+--accent:var(--hp-yellow);
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Green Line — Sign Mockups</title><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:var(--font-body);color:var(--text-body);background:var(--surface-muted)}a{color:var(--text-body)}a:hover{color:var(--text-muted)}
+.wrap{max-width:1480px;margin:0 auto;padding:40px 32px 80px}
+h1{font-family:var(--font-display);font-weight:400;font-size:44px;line-height:1;text-transform:uppercase;margin:0}
+.lede{margin:10px 0 0;font-size:15px;line-height:1.5;max-width:760px;color:var(--text-muted);text-wrap:pretty}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(480px,1fr));gap:24px;margin-top:32px}
+.card{background:#fff;border:1px solid var(--border-default);display:flex;flex-direction:column}
+.chead{display:flex;align-items:center;gap:10px;padding:16px 20px 0}
+.num{font-weight:700;font-size:12px;background:var(--hp-black);color:var(--hp-yellow);padding:3px 8px;border-radius:3px;letter-spacing:.04em}
+.type{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}
+.ctitle{font-family:var(--font-display);font-size:22px;line-height:1.1;text-transform:uppercase;padding:8px 20px 14px;margin:0;font-weight:400}
+.stage{background:var(--hp-gray-100);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:200px}
+.meta{padding:14px 20px 18px;display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.45}
+.meta b{font-weight:700}
+.flags{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+.flag{font-size:12px;line-height:1.4;background:#FFF4C2;padding:5px 8px;border-radius:3px}
+.legend{display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-top:20px;font-size:13px}
+.li{display:flex;align-items:center;gap:8px}</style></head><body>
+<div class="wrap">
+<h1>Green Line — Sign Mockups</h1>
+<p class="lede">All 22 signs from the Green Line Sign Inventory. Street signs use the Type 1 blade at 30″ × 9″. Board signs use the 2a List Board layout, 36″ wide, with height set by the number of rows. Yellow notes mark assumptions to confirm before printing.</p>
+<div class="legend" id="legend"></div>
+<div class="grid" id="grid"></div>
+</div>
+<script type="text/babel">
+const { StreetSign, DifficultySymbol, DirectionArrow, DestinationIcon, LEVELS } = window.HawkPrideSignageDesignSystem_931354;
+const LOGO_BLACK = '../../assets/logo/brandmark-black.svg';
+const GL = { name: 'Green Line', level: 'easy' };
+
+const SIGNS = [
+  { id: '01', title: 'Green Line Entrance', kind: 'street', blades: [GL],
+    location: 'Start of the Green Line, at the fork shown in the reference photograph.', purpose: 'Identify the beginning of the Green Line trail.', photo: 'IMG_3934.jpeg',
+    flags: ['Green Line has no trail number in the inventory.'] },
+  { id: '02', title: 'Green Line Trail Entry', kind: 'board', rows: [{ ...GL, direction: 'right' }],
+    location: 'Trail entrance at the junction shown in the photograph, near trail marker 79.', purpose: 'Visible to approaching riders, pointing right toward the Green Line entry.', photo: 'IMG_3935.jpeg' },
+  { id: '03', title: 'Green Line / Whiskey Run Intersection', kind: 'street', blades: [GL, { name: 'Whiskey Run', number: 100, level: 'difficult' }],
+    location: 'Intersection shown in the photograph.', purpose: 'Identify the intersection of Green Line and Whiskey Run (100), which is a RED trail.', photo: 'IMG_3936.jpeg',
+    flags: ['Listed as a multi-direction sign with no arrows, so shown as two street blades.'] },
+  { id: '04', title: 'Ridgeline / Lower Ridgeline / Green Line Intersection', kind: 'board',
+    rows: [{ name: 'Ridgeline', number: 81, level: 'tbd', direction: 'left' }, { name: 'Lower Ridgeline', number: 101, level: 'moderate', direction: 'right' }, { ...GL, direction: 'straight' }],
+    location: 'Trail intersection shown in the photograph.', purpose: 'Direct riders left to Ridgeline (81), right to Lower Ridgeline (101), and straight ahead to Green Line.', photo: 'IMG_3937.jpeg',
+    flags: ['Ridgeline (81) difficulty not given.', '"Moderate" read as applying to Lower Ridgeline (101) only.'] },
+  { id: '05', title: 'Green Light Cut Through', kind: 'board',
+    rows: [{ name: 'Green Light Cut Through', level: 'tbd', direction: 'left' }, { name: 'Green Line Main', level: 'easy', direction: 'straight' }],
+    location: 'Junction between Green Light Cut Through and Green Line Main; exact placement to be confirmed.', purpose: 'Direct riders left to the cut-through or straight ahead along the main Green Line.', photo: 'IMG_3938.jpeg',
+    note: 'Trail maintenance: the trail needs some work a little past this area.',
+    flags: ['Green Light Cut Through difficulty and number not given.', 'Listed as a small board sign; shown at the standard 36″ width.'] },
+  { id: '06', title: 'Green Line / Vertical Limit Intersection', kind: 'board',
+    rows: [{ ...GL, direction: 'left' }, { name: 'Vertical Limit', number: 103, level: 'tbd', direction: 'straight' }, { name: "To Jake's Hill", number: 102, level: 'tbd', direction: 'straight' }, { name: 'To Hopkins Revenge', number: 142, level: 'tbd', direction: 'straight' }],
+    location: 'Trail intersection shown in the photograph, beside existing green left-arrow marker.', purpose: 'Direct riders left to Green Line and straight ahead to Vertical Limit and the listed connecting trails.', photo: 'IMG_3939.jpeg',
+    flags: ['Difficulty not given for Vertical Limit (103), Jake\'s Hill (102) or Hopkins Revenge (142).', 'The "To Vertical Limit, Jake\'s Hill, Hopkins Revenge" line is split into one row per trail; Vertical Limit appears once.'] },
+  { id: '07', title: "Green Line / Fatty's Crack Directions", kind: 'board',
+    rows: [{ name: "To Fatty's Crack", level: 'moderate', direction: 'right' }, { name: "To Fatty's Crack", level: 'easy', direction: 'straight' }, { ...GL, direction: 'left' }],
+    location: 'Trail junction shown in the photograph, near the existing green left-arrow marker.', purpose: "Direct riders right toward Fatty's Crack via the blue route, straight ahead toward Fatty's Crack via the green route, and left along Green Line.", photo: 'IMG_3940.jpeg',
+    flags: ['Listed as street-style but has three arrows, so shown as a board.', 'Blue and green routes shown by symbol and arrow color; Fatty\'s Crack itself is Hard (see Sign 22).'] },
+  { id: '08', title: "Ed's Ledge / Green Line Intersection", kind: 'street', blades: [{ name: "Ed's Ledge", number: 120, level: 'moderate' }, GL],
+    location: 'Trail intersection shown in the photograph, near existing trail arrow markers.', purpose: "Identify the intersection of Ed's Ledge and Green Line.", photo: 'IMG_3941.jpeg',
+    flags: ["Number 120 and Moderate taken from Sign 23."] },
+  { id: '09', title: 'Ridgeline (81)', kind: 'street', blades: [{ name: 'Ridgeline', number: 81, level: 'tbd' }],
+    location: 'Junction shown in IMG_3942.jpeg.', photo: 'IMG_3942.jpeg', flags: ['Ridgeline (81) difficulty not given.'] },
+  { id: '10', title: 'Green Line Sharp Right Switchback', kind: 'board', rows: [{ ...GL, direction: 'straight-then-right-then-down' }],
+    location: 'Same junction as Sign 09, shown in IMG_3942.jpeg.', photo: 'IMG_3942.jpeg',
+    flags: ['Hairpin arrow drawn as straight, then right, then down. Inventory asks to confirm the artwork before production.'] },
+  { id: '11', title: 'Green Line / Ridgeline (81) Intersection', kind: 'street', blades: [GL, { name: 'Ridgeline', number: 81, level: 'tbd' }],
+    location: 'Junction shown in IMG_3943.jpeg.', photo: 'IMG_3943.jpeg', flags: ['Ridgeline (81) difficulty not given.'] },
+  { id: '12', title: 'To Cabins', kind: 'board', rows: [{ name: 'To Cabins', level: 'destination', destination: 'cabins', direction: 'straight' }],
+    location: 'Same junction as Sign 11, shown in IMG_3943.jpeg.', photo: 'IMG_3943.jpeg' },
+  { id: '13', title: "Allen's Way / Green Line Directions", kind: 'board',
+    rows: [{ name: "To Allen's Way", number: 83, level: 'difficult', direction: 'straight' }, { ...GL, direction: 'left' }],
+    location: 'Junction shown in the reference photograph.', purpose: "Direct riders straight ahead toward Allen's Way or left to remain on Green Line.", photo: 'IMG_3944.jpeg',
+    flags: ["Number 83 and Moderate Hard (→ Difficult) taken from Sign 17."] },
+  { id: '14', title: "Ed's Ledge Direction", kind: 'board', rows: [{ name: "Ed's Ledge", number: 120, level: 'moderate', direction: 'right' }],
+    location: 'Trail turn shown in the reference photograph.', purpose: "Direct riders right onto Ed's Ledge.", photo: 'IMG_3945.jpeg',
+    flags: ["Number 120 and Moderate taken from Sign 23."] },
+  { id: '15', title: 'Ridgeline (81) / Green Line Intersection', kind: 'street', blades: [{ name: 'Ridgeline', number: 81, level: 'tbd' }, GL],
+    location: 'Trail junction shown in the reference photograph, near the existing green arrow marker on the tree.', purpose: 'Identify the intersection of Ridgeline (81) and Green Line.', photo: 'IMG_3946.jpeg',
+    flags: ['Ridgeline (81) difficulty not given.'] },
+  { id: '16', title: 'Cabins / Green Line Directions', kind: 'board',
+    rows: [{ name: 'To Cabins', level: 'destination', destination: 'cabins', direction: 'left' }, { ...GL, direction: 'right' }],
+    location: 'Trail junction shown in the reference photograph.', purpose: 'Direct riders left toward the cabins and right along Green Line.', photo: 'IMG_3947.jpeg' },
+  { id: '17', title: "Allen's Way (83)", kind: 'street', blades: [{ name: "Allen's Way", number: 83, level: 'difficult' }],
+    location: 'Junction shown in IMG_3949.jpeg.', photo: 'IMG_3949.jpeg',
+    flags: ['Moderate Hard converts to Difficult (red) under the Playbook.'] },
+  { id: '18', title: "Fatty's Crack / Green Line Directions", kind: 'board',
+    rows: [{ name: "To Fatty's Crack", level: 'difficult', direction: 'right' }, { ...GL, direction: 'left' }],
+    location: 'Same junction as Sign 17, shown in IMG_3949.jpeg.', photo: 'IMG_3949.jpeg',
+    flags: ["Fatty's Crack shown as Hard (→ Difficult) per Sign 22; number not given."] },
+  { id: '20', title: 'Green Line / One Shot, Sunshine', kind: 'board',
+    rows: [{ name: 'One Shot', number: 144, level: 'difficult', direction: 'right' }, { name: 'Sunshine', number: 145, level: 'extreme', direction: 'right' }, { ...GL, direction: 'left' }],
+    location: 'Junction shown in photograph.', photo: 'IMG_3954.jpeg',
+    flags: ['"RED/PURPLE" read as One Shot = red, Sunshine = purple.'] },
+  { id: '21', title: 'Easy Peasy / Green Line Intersection', kind: 'street', blades: [{ name: 'Easy Peasy', level: 'difficult' }, GL],
+    location: 'Junction shown in photograph.', photo: 'IMG_3955.jpeg',
+    flags: ['Hard converts to Difficult (red).', 'Easy Peasy has no trail number in the inventory.'] },
+  { id: '22', title: "To Fatty's Crack / Green Line", kind: 'board',
+    rows: [{ name: 'To Commandments', level: 'difficult', direction: 'right' }, { name: "To Fatty's Crack", level: 'difficult', direction: 'right' }, { ...GL, direction: 'left' }],
+    location: 'Junction shown in photograph.', photo: 'IMG_3956.jpeg',
+    flags: ['Reference photo is UNCONFIRMED per the inventory.', '"(HARD)" applied to both Commandments and Fatty\'s Crack.'] },
+  { id: '23', title: "Ed's Ledge (120)", kind: 'street', blades: [{ name: "Ed's Ledge", number: 120, level: 'moderate' }],
+    location: 'Junction shown in photograph.', photo: 'IMG_3957.jpeg' },
+];
+
+/* Board sign — 2a List Board */
+const u = 12, BW = 36;
+const disp = { fontFamily: 'var(--font-display)', textTransform: 'uppercase', lineHeight: 1, whiteSpace: 'nowrap' };
+const isLeft = d => /left$/.test(d);
+const Slot = ({ w, children }) => <div style={{ width: w, flex: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{children}</div>;
+function Fit({ size, style, children }) {
+  const ref = React.useRef(null);
+  const [tick, setTick] = React.useState(0);
+  React.useEffect(() => {
+    let live = true; const bump = () => live && setTick(t => t + 1);
+    document.fonts.ready.then(bump); document.fonts.addEventListener('loadingdone', bump);
+    const ro = new ResizeObserver(bump); ro.observe(ref.current.parentElement);
+    return () => { live = false; document.fonts.removeEventListener('loadingdone', bump); ro.disconnect(); };
+  }, []);
+  React.useLayoutEffect(() => { const el = ref.current; let f = size; el.style.fontSize = f + 'px'; let g = 0; while (el.scrollWidth > el.clientWidth + 0.5 && g++ < 80) { f *= 0.97; el.style.fontSize = f + 'px'; } });
+  return <div ref={ref} style={{ ...disp, flex: '0 1 auto', minWidth: 0, overflow: 'hidden', fontSize: size, ...style }}>{children}</div>;
+}
+const TBD_INK = 'var(--hp-gray-400)';
+function TbdSymbol({ size }) {
+  return <div style={{ width: size, height: size, border: `${Math.max(size * 0.08, 1.5)}px dashed ${TBD_INK}`, borderRadius: size * 0.1, display: 'flex', alignItems: 'center', justifyContent: 'center', ...disp, fontSize: size * 0.6, color: TBD_INK }}>?</div>;
+}
+function BoardRow({ r, last }) {
+  const tbd = r.level === 'tbd', dest = r.level === 'destination';
+  const arrow = <Slot w={3.6 * u}><DirectionArrow direction={r.direction} level={tbd ? undefined : r.level} color={tbd ? TBD_INK : undefined} size={3.6 * u} strokeWidth={3.75} /></Slot>;
+  return <div style={{ height: 4.1 * u, display: 'flex', alignItems: 'center', gap: 0.5 * u, borderBottom: last ? 'none' : `${0.12 * u}px solid var(--hp-black)` }}>
+    {isLeft(r.direction) && arrow}
+    <Slot w={2.9 * u}>{dest
+      ? <DestinationIcon destination={r.destination} size={2.8 * u} strokeWidth={3} />
+      : r.number != null && <div style={{ ...disp, height: 2.7 * u, minWidth: 2.7 * u, padding: `0 ${0.2 * u}px`, boxSizing: 'border-box', border: `${0.2 * u}px solid var(--hp-black)`, borderRadius: 0.18 * u, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 2 * u }}>{r.number}</div>}</Slot>
+    <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 0.45 * u }}>
+      <Fit size={2.6 * u}>{r.name}</Fit>
+      {!dest && <div style={{ flex: 'none', display: 'flex' }}>{tbd ? <TbdSymbol size={2 * u} /> : <DifficultySymbol level={r.level} size={r.level === 'extreme' ? 1.45 * u : 2.2 * u} />}</div>}
+    </div>
+    {!isLeft(r.direction) && arrow}
+  </div>;
+}
+function BoardSign2a({ rows }) {
+  const pad = 0.6, border = 0.45, logoW = rows.length <= 2 ? 14 : 20, logoH = logoW * 256 / 500, gap = 0.4;
+  const hIn = border * 2 + pad * 2 + logoH + gap + rows.length * 4.1;
+  return <div>
+    <div style={{ width: BW * u, background: '#fff', border: `${border * u}px solid var(--hp-black)`, borderRadius: 0.5 * u, padding: `${pad * u}px ${0.8 * u}px`, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: gap * u }}>
+      <img src={LOGO_BLACK} alt="Hawk Pride" style={{ width: logoW * u, alignSelf: 'center', display: 'block' }} />
+      <div style={{ display: 'flex', flexDirection: 'column' }}>{rows.map((r, i) => <BoardRow key={i} r={r} last={i === rows.length - 1} />)}</div>
+    </div>
+    <div style={{ fontSize: 11, color: 'var(--text-muted)', textAlign: 'center', marginTop: 8 }}>36″ × {Math.round(hIn)}″ · {rows.length} row{rows.length > 1 ? 's' : ''}</div>
+  </div>;
+}
+
+/* Street sign — Type 1 blade; unknown ratings render gray */
+function Blade({ b }) {
+  if (b.level === 'tbd') return <div style={{ filter: 'grayscale(1) brightness(1.15)' }}><StreetSign name={b.name} number={b.number} level="easy" showSymbol={false} ppi={u} /></div>;
+  return <StreetSign name={b.name} number={b.number} level={b.level} ppi={u} />;
+}
+function StreetStack({ blades }) {
+  return <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 0.5 * u }}>{blades.map((b, i) => <Blade key={i} b={b} />)}</div>
+    <div style={{ width: 2 * u, height: 6 * u, background: 'var(--hp-gray-400)' }}></div>
+    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 8 }}>30″ × 9″ blade{blades.length > 1 ? ` · ${blades.length} blades` : ''}</div>
+  </div>;
+}
+
+function Card({ s }) {
+  const tbd = (s.rows || s.blades).some(x => x.level === 'tbd');
+  return <article className="card" id={'sign-' + s.id} data-screen-label={'Sign ' + s.id}>
+    <div className="chead"><span className="num">SIGN {s.id}</span><span className="type">{s.kind === 'street' ? 'Type 1 · Street sign' : 'Type 2 · Board sign'}</span></div>
+    <h2 className="ctitle">{s.title}</h2>
+    <div className="stage">{s.kind === 'street' ? <StreetStack blades={s.blades} /> : <BoardSign2a rows={s.rows} />}</div>
+    <div className="meta">
+      <div><b>Location:</b> {s.location}</div>
+      {s.purpose && <div><b>Purpose:</b> {s.purpose}</div>}
+      {s.note && <div><b>Note:</b> {s.note.replace(/^Trail maintenance: /, 'Trail maintenance: ')}</div>}
+      <div style={{ color: 'var(--text-muted)' }}><b>Photo:</b> {s.photo} · <b>Status:</b> Needed</div>
+      {(s.flags || tbd) && <div className="flags">
+        {tbd && !(s.flags || []).some(f => /difficulty not given/.test(f)) && <div className="flag">Check: difficulty not given; shown in gray.</div>}
+        {(s.flags || []).map((f, i) => <div key={i} className="flag">Check: {f}</div>)}
+      </div>}
+    </div>
+  </article>;
+}
+
+function Legend() {
+  return <>
+    {['easy', 'moderate', 'difficult', 'extreme'].map(l => <div key={l} className="li"><DifficultySymbol level={l} size={l === 'extreme' ? 14 : 20} />{LEVELS[l].label}</div>)}
+    <div className="li"><TbdSymbol size={20} />Rating not given</div>
+  </>;
+}
+ReactDOM.createRoot(document.getElementById('legend')).render(<Legend />);
+ReactDOM.createRoot(document.getElementById('grid')).render(<>{SIGNS.map(s => <Card key={s.id} s={s} />)}</>);
+</script></body></html>
